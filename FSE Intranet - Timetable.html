@@ -1,0 +1,1903 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=10; IE=11; IE=EDGE" />
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex,nofollow">
+    <title>FSE Intranet - Timetable</title>
+    <link href="/intranet/static/img/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+    <link rel="stylesheet" href="/intranet/static/CACHE/css/ea1beef836e9.css" type="text/css" /><link rel="stylesheet" href="/intranet/static/CACHE/css/981f2f0695c7.css" type="text/css" media="print" />
+
+    <link rel="stylesheet" href="/intranet/static/CACHE/css/6b657bdc53f9.css" type="text/css" />
+
+    
+    
+    <script type="text/javascript" charset="utf-8" src="/intranet/static/script/intranet.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/intranet/static/script/intranet.ui.js"></script>
+    <script type="text/javascript">
+        $.intranet.jsonRPCEndpointURL = '/intranet/json/'
+        $(function() {
+            $.intranet.ensureZebraStripes()
+        })
+    </script>
+    
+
+    
+    <link href="/intranet/static/attendance/css/timetable.css" rel="stylesheet" type="text/css" />
+    <link href="/intranet/static/attendance/css/timetable-print.css" rel="stylesheet" type="text/css" media="print" />
+    <script type="text/javascript" src="/intranet/static/attendance/script/timetable.js"></script>
+    <script type="text/javascript">
+        var currentStartDate = $.datepicker.parseDate("yy/mm/dd", "2021/10/18")
+        var baseTimetableURL = "/intranet/attendance/pclabs_timetable"
+        var queryString = "?building=Computational+Foundry"
+        
+            var usePartialRefresh = true
+        
+    </script>
+
+</head>
+<body class="wide">
+
+<div class="header">
+    <img id="logo" src="/intranet/static/skins/science/img/uni_logo.png" width="200" height="100" alt="Swansea University">
+
+    <div id="headerlinks">
+        
+            <p id="logout">Welcome <strong>Mr Miles Singleton</strong>&nbsp;&nbsp;&nbsp;
+                 
+        		<a href="?building=Computational+Foundry&language=cy">Cymraeg</a>
+        		
+
+                 <a href="/intranet/logout">&nbsp;&nbsp;&nbsp;Logout</a></p>
+        
+            </div>
+    
+    <div id="wrapper">
+        <h1><a href="/"> FSE Intranet</a></h1>
+		
+        <div class="nav">
+            
+    
+    
+               
+               		
+               		<a href="/">HOME</a> > 
+               		
+               
+            
+    
+
+    
+
+            <a href="/intranet/attendance/">Timetable Related Options</a> &gt; <span class="item current">Timetable</span>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="pagecontent">
+	
+    
+
+<div id="contenttoolbar">
+    <div id="links" class="noprint">
+        
+            <a id="leftlink"  class="" href="/intranet/attendance/pclabs_timetable/2021/10/11?building=Computational+Foundry">&larr; Previous</a>
+            <a id="rightlink" class="" href="/intranet/attendance/pclabs_timetable/2021/10/25?building=Computational+Foundry">Next &rarr;</a>
+        
+    </div>
+  
+    <h2 id=timetabletitle>
+        
+            Week beginning <span id=currentweek><span id=currentweekspan>18 October 2021</span><input readonly id=currentweekinput type=text value="18th October 2021" /></span>
+        
+    </h2>
+    <br style="clear: both" class=noprint />
+</div>
+
+ <h2><strong>College of Science PC Labs Timetable - </strong> Computational Foundry</h2>
+ <p><strong>Use to find PC labs with no scheduled teaching."</strong></p>
+
+
+    <ul class="topfilterlist noprint">
+        	
+            	<li class=current>Weekly</li>
+        	
+        	
+            	
+                	<li><a href="/intranet/attendance/pclabs_timetable?building=Computational+Foundry&semester=Semester+1">Semester 1</a></li>
+            	
+        	
+            	
+                	<li><a href="/intranet/attendance/pclabs_timetable?building=Computational+Foundry&semester=Semester+2">Semester 2</a></li>
+            	
+        	
+       
+    </ul>
+
+
+    <ul class="topfilterlist noprint">
+        
+            
+                <li><a href="?building=Faraday">Faraday</a></li>
+            
+        
+            
+                <li><a href="?building=Wallace">Wallace</a></li>
+            
+        
+            
+                <li><a href="?building=Talbot">Talbot</a></li>
+            
+        
+            
+                <li class=current>Computational Foundry</li>
+            
+        
+    </ul>
+
+
+
+    <ul class="topfilterlist noprint">
+    	
+            <li class=current>All</li>
+        
+        
+            
+                <li><a href="?building=Computational+Foundry&room=204">CF204</a></li>
+            
+        
+            
+                <li><a href="?building=Computational+Foundry&room=203">CF203</a></li>
+            
+        
+            
+                <li><a href="?building=Computational+Foundry&room=202">CF202</a></li>
+            
+        
+            
+                <li><a href="?building=Computational+Foundry&room=104">CF104</a></li>
+            
+        
+    </ul>
+
+
+
+<div id=timetablewrapper>
+    <div id="loading"></div>
+    
+<table id=pclabs_timetable class="pclabs_timetable fullwidth centercells ">
+    <thead>
+        <tr>
+            <th></th>
+            
+                <th class=day>Monday 18</th>
+                <th class=day>Tuesday 19</th>
+                <th class=day>Wednesday 20</th>
+                <th class=day>Thursday 21</th>
+                <th class=day>Friday 22</th>
+            
+        </tr>
+    </thead>
+
+    <tr class="odd">
+        <th>9:00</th>
+        
+            <td>
+                <div class=slot data-hour="9" data-day="0" data-day-of-month="18" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43962">
+                            
+                                <strong>CSC318 Group 1</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45414">
+                            
+                                <strong>CSC318 Group 2</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 (Windows Lab)</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45415">
+                            
+                                <strong>CSCM18 Group 2</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 (Windows Lab)</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43963">
+                            
+                                <strong>CSCM18 Group 1</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="9" data-day="1" data-day-of-month="19" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43874">
+                            
+                                <strong>CS-110 - Turing</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC,Computational Foundry 203 Windows Lab, Y Twyni 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="9" data-day="2" data-day-of-month="20" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45410">
+                            
+                                <strong>CSC318 Group 4</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43978">
+                            
+                                <strong>CSC368</strong>
+                                <span>STF</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">04:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45411">
+                            
+                                <strong>CSCM18 Group 4</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45322">
+                            
+                                <strong>CSCM68</strong>
+                                <span>STF</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">04:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="9" data-day="3" data-day-of-month="21" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab (Online)" class="lecture " data-lecture-pk="43908">
+                            
+                                <strong>CS-205 Babbage</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC, Engineering Central C102 PC, Computational Foundry 203 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43929">
+                            
+                                <strong>CS-270</strong>
+                                <span>JEB, OK</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="9" data-day="4" data-day-of-month="22" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43974">
+                            
+                                <strong>CSC348</strong>
+                                <span>STF, SPW</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC, Engineering Central C102 PC, Y Twyni 104 PC, Computational Foundry 203 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43975">
+                            
+                                <strong>CSCM48</strong>
+                                <span>SPW</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC, Engineering Central C102 PC, Y Twyni 104 PC, Computational Foundry 203 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+    </tr>
+
+    <tr class="even">
+        <th>10:00</th>
+        
+            <td>
+                <div class=slot data-hour="10" data-day="0" data-day-of-month="18" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43962">
+                            
+                                <strong>CSC318 Group 1</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45414">
+                            
+                                <strong>CSC318 Group 2</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 (Windows Lab)</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45415">
+                            
+                                <strong>CSCM18 Group 2</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 (Windows Lab)</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43963">
+                            
+                                <strong>CSCM18 Group 1</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="10" data-day="1" data-day-of-month="19" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43874">
+                            
+                                <strong>CS-110 - Turing</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC,Computational Foundry 203 Windows Lab, Y Twyni 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="10" data-day="2" data-day-of-month="20" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45410">
+                            
+                                <strong>CSC318 Group 4</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43978">
+                            
+                                <strong>CSC368</strong>
+                                <span>STF</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">04:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45411">
+                            
+                                <strong>CSCM18 Group 4</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45322">
+                            
+                                <strong>CSCM68</strong>
+                                <span>STF</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">04:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="10" data-day="3" data-day-of-month="21" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab (Online)" class="lecture " data-lecture-pk="43908">
+                            
+                                <strong>CS-205 Babbage</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC, Engineering Central C102 PC, Computational Foundry 203 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43930">
+                            
+                                <strong>CS-270</strong>
+                                <span>JEB, OK</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="10" data-day="4" data-day-of-month="22" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43987">
+                            
+                                <strong>CSC385</strong>
+                                <span>UB</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43988">
+                            
+                                <strong>CSCM85</strong>
+                                <span>UB</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43488">
+                            
+                                <strong>MA-131</strong>
+                                <span>DLF, SL</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+    </tr>
+
+    <tr class="odd">
+        <th>11:00</th>
+        
+            <td>
+                <div class=slot data-hour="11" data-day="0" data-day-of-month="18" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43968">
+                            
+                                <strong>CSC345</strong>
+                                <span>ZL</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC, Computational Foundry 203 Windows Lab,Engineering Central C102 PC,Y Twyni 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43969">
+                            
+                                <strong>CSCM45</strong>
+                                <span>ZL</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC, Computational Foundry 203 Windows Lab,Engineering Central C102 PC,Y Twyni 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="11" data-day="1" data-day-of-month="19" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43940">
+                            
+                                <strong>CSC061</strong>
+                                <span>JSP</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC, Computational Foundry 203 Windows Lab</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="11" data-day="2" data-day-of-month="20" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43978">
+                            
+                                <strong>CSC368</strong>
+                                <span>STF</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">04:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45322">
+                            
+                                <strong>CSCM68</strong>
+                                <span>STF</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">04:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43494">
+                            
+                                <strong>MA-181</strong>
+                                <span>NP</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="11" data-day="3" data-day-of-month="21" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43909">
+                            
+                                <strong>CS-205 Lovelace</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC,Computational Foundry 203 Windows Lab, Y Twyni 104 PC &amp; Online Group</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab (Online)" class="lecture " data-lecture-pk="43931">
+                            
+                                <strong>CS-270</strong>
+                                <span>JEB, OK</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="11" data-day="4" data-day-of-month="22" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43938">
+                            
+                                <strong>CSC005</strong>
+                                <span>IMD, MJR</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43983">
+                            
+                                <strong>CSC372</strong>
+                                <span>AAMR</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Y Twyni 104 PC, Engineering Central C102 PC, Engineering Central C104 PC, The College 129 </div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45570">
+                            
+                                <strong>CSC385 (Optional)</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43984">
+                            
+                                <strong>CSCM72</strong>
+                                <span>AAMR</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Y Twyni 104 PC, Engineering Central C102 PC, Engineering Central C104 PC, The College 129</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45571">
+                            
+                                <strong>CSCM85 (Optional)</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 (Linux Lab)</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43468">
+                            
+                                <strong>MA-009</strong>
+                                <span>IMD</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+    </tr>
+
+    <tr class="even">
+        <th>12:00</th>
+        
+            <td>
+                <div class=slot data-hour="12" data-day="0" data-day-of-month="18" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43948">
+                            
+                                <strong>CSC306</strong>
+                                <span>TO</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC, Computational Foundry 203 Windows Lab, Engineering Central C102 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="12" data-day="1" data-day-of-month="19" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43940">
+                            
+                                <strong>CSC061</strong>
+                                <span>JSP</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC, Computational Foundry 203 Windows Lab</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="12" data-day="2" data-day-of-month="20" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43978">
+                            
+                                <strong>CSC368</strong>
+                                <span>STF</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">04:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45322">
+                            
+                                <strong>CSCM68</strong>
+                                <span>STF</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">04:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43495">
+                            
+                                <strong>MA-181</strong>
+                                <span>NP</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="12" data-day="3" data-day-of-month="21" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43909">
+                            
+                                <strong>CS-205 Lovelace</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC,Computational Foundry 203 Windows Lab, Y Twyni 104 PC &amp; Online Group</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43932">
+                            
+                                <strong>CS-270</strong>
+                                <span>JEB, OK</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="12" data-day="4" data-day-of-month="22" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43938">
+                            
+                                <strong>CSC005</strong>
+                                <span>IMD, MJR</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43468">
+                            
+                                <strong>MA-009</strong>
+                                <span>IMD</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45522">
+                            
+                                <strong>CSC313 Group 4</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45523">
+                            
+                                <strong>CSCM13 Group 4</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+    </tr>
+
+    <tr class="odd">
+        <th>13:00</th>
+        
+            <td>
+                <div class=slot data-hour="13" data-day="0" data-day-of-month="18" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="13" data-day="1" data-day-of-month="19" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43875">
+                            
+                                <strong>CS-110 - Lovelace</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC,Computational Foundry 203 Windows Lab, Y Twyni 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="13" data-day="2" data-day-of-month="20" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="13" data-day="3" data-day-of-month="21" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43910">
+                            
+                                <strong>CS-205 Turing</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC,Computational Foundry 203 Windows Lab, Y Twyni 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43933">
+                            
+                                <strong>CS-270</strong>
+                                <span>JEB, OK</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab  &amp; Online Group</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="13" data-day="4" data-day-of-month="22" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45522">
+                            
+                                <strong>CSC313 Group 4</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="45523">
+                            
+                                <strong>CSCM13 Group 4</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+    </tr>
+
+    <tr class="even">
+        <th>14:00</th>
+        
+            <td>
+                <div class=slot data-hour="14" data-day="0" data-day-of-month="18" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43955">
+                            
+                                <strong>CSC313 Group 2</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="44291">
+                            
+                                <strong>CSC318 Group 3</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43956">
+                            
+                                <strong>CSCM13 Group 2</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="44292">
+                            
+                                <strong>CSCM18 Group 3</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="44013">
+                            
+                                <strong>CSCM98</strong>
+                                <span>BM</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Engineering Central C102 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="14" data-day="1" data-day-of-month="19" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43875">
+                            
+                                <strong>CS-110 - Lovelace</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC,Computational Foundry 203 Windows Lab, Y Twyni 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="14" data-day="2" data-day-of-month="20" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="14" data-day="3" data-day-of-month="21" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43910">
+                            
+                                <strong>CS-205 Turing</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC,Computational Foundry 203 Windows Lab, Y Twyni 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43934">
+                            
+                                <strong>CS-270</strong>
+                                <span>JEB, OK</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="14" data-day="4" data-day-of-month="22" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="Support Class" class="lecture " data-lecture-pk="43911">
+                            
+                                <strong>CS-205</strong>
+                                <span>PRAP, MS</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43979">
+                            
+                                <strong>CSC368</strong>
+                                <span>STF</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">03:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43980">
+                            
+                                <strong>CSCM68</strong>
+                                <span>STF</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">03:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+    </tr>
+
+    <tr class="odd">
+        <th>15:00</th>
+        
+            <td>
+                <div class=slot data-hour="15" data-day="0" data-day-of-month="18" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43955">
+                            
+                                <strong>CSC313 Group 2</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="44291">
+                            
+                                <strong>CSC318 Group 3</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43956">
+                            
+                                <strong>CSCM13 Group 2</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="44292">
+                            
+                                <strong>CSCM18 Group 3</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="44013">
+                            
+                                <strong>CSCM98</strong>
+                                <span>BM</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Engineering Central C102 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="15" data-day="1" data-day-of-month="19" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43876">
+                            
+                                <strong>CS-110 - Babbage</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC,Computational Foundry 203 Windows Lab, Y Twyni 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="15" data-day="2" data-day-of-month="20" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="15" data-day="3" data-day-of-month="21" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43935">
+                            
+                                <strong>CS-270</strong>
+                                <span>JEB, OK</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43941">
+                            
+                                <strong>CSC079</strong>
+                                <span>DRS</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">03:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="15" data-day="4" data-day-of-month="22" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43979">
+                            
+                                <strong>CSC368</strong>
+                                <span>STF</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">03:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43980">
+                            
+                                <strong>CSCM68</strong>
+                                <span>STF</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">03:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="44007">
+                            
+                                <strong>CSCM59</strong>
+                                <span>MIE</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+    </tr>
+
+    <tr class="even">
+        <th>16:00</th>
+        
+            <td>
+                <div class=slot data-hour="16" data-day="0" data-day-of-month="18" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43957">
+                            
+                                <strong>CSC313 Group 3</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43958">
+                            
+                                <strong>CSCM13 Group 3</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="44000">
+                            
+                                <strong>CSCM41</strong>
+                                <span>SAN</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="16" data-day="1" data-day-of-month="19" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43876">
+                            
+                                <strong>CS-110 - Babbage</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC,Computational Foundry 203 Windows Lab, Y Twyni 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="16" data-day="2" data-day-of-month="20" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="16" data-day="3" data-day-of-month="21" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43941">
+                            
+                                <strong>CSC079</strong>
+                                <span>DRS</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">03:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43936">
+                            
+                                <strong>CS-270</strong>
+                                <span>JEB, OK</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">01:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="16" data-day="4" data-day-of-month="22" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43979">
+                            
+                                <strong>CSC368</strong>
+                                <span>STF</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">03:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43980">
+                            
+                                <strong>CSCM68</strong>
+                                <span>STF</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">03:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 203 Windows Lab, Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+    </tr>
+
+    <tr class="odd">
+        <th>17:00</th>
+        
+            <td>
+                <div class=slot data-hour="17" data-day="0" data-day-of-month="18" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43957">
+                            
+                                <strong>CSC313 Group 3</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43958">
+                            
+                                <strong>CSCM13 Group 3</strong>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 204 Linux Lab</div>
+                            
+                            
+                        </div>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="44000">
+                            
+                                <strong>CSCM41</strong>
+                                <span>SAN</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">02:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="17" data-day="1" data-day-of-month="19" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="17" data-day="2" data-day-of-month="20" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="17" data-day="3" data-day-of-month="21" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                        <div rel=tipsy title="PC Lab" class="lecture " data-lecture-pk="43941">
+                            
+                                <strong>CSC079</strong>
+                                <span>DRS</span>
+                            
+                            
+                            
+                                <div class="lectureinfo duration">03:00 hours</div>
+                            
+                            
+                                <div class="lectureinfo room">Computational Foundry 104 PC</div>
+                            
+                            
+                        </div>
+                    
+                    
+                </div>
+            </td>
+        
+            <td>
+                <div class=slot data-hour="17" data-day="4" data-day-of-month="22" data-month-name="October" data-month="10" data-year="2021"><span class=target></span>
+                    
+                    
+                </div>
+            </td>
+        
+    </tr>
+
+</table>
+
+</div>
+
+
+<div id=timestamp class=printonly>Printed on 18 Oct 2021. The most recent version is available at https://fse-intranet.swan.ac.uk/intranet/attendance/pclabs_timetable</div>
+
+
+
+
+
+</div>
+
+<div class="footer">
+        
+        	<span id="problems">
+            <strong>Any problems with using this system, please contact </strong>
+            	
+            		
+            		
+            		<a href="mailto:fse-intranet@swansea.ac.uk">FSE Intranet Team</a>
+            		
+            	</a>
+             </span>
+        
+       <div id="wrapper"><div id="nav"><h3><strong><a href="/intranet/help/accessibility">Accessibility Statement</a></strong></h3></div></div>
+   
+</div>
+
+
+    
+
+
+</body>
+</html>
