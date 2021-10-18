@@ -1,7 +1,7 @@
 from datetime import time
 from lxml import html
 from numpy import empty
-import requests
+#import requests
 import pandas as pd
 
 class lab:
@@ -17,24 +17,16 @@ class lab:
     def __str__(self) -> str:
         return 'Module:    ' + self.name + '\n'+ 'Duration:   ' + self.duration +'\n' + 'Location:     ' + self.location
 
-
-def getDat(num: int) -> str:
-    match num:
-        case 1:
-            return ''
-
 table = open('FSE Intranet - Timetable.html', 'r').read()
-# print(tempHTMLFile)
 
 
 
 timetable = pd.read_html(table)
 timetable = timetable[0]
-# Store coloumn names as they change each year
-# Index 1 = Monday, Index 5 = Friday
-coloumnList = timetable.columns
-for x in coloumnList:
-    print(x)
+# Store coloumn names as they change each week
+# index 0 of coloumns is not needed 
+coloumnList = timetable.columns[1:5]
+
 
 #Reads Line of table and turns all labs in said slot into objects stored in a list
 commaLine = str(timetable[coloumnList[3]][0]).split('CS')
