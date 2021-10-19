@@ -114,3 +114,4 @@ dmypy.json
 .pyre/
 FSE Intranet - Timetable.html:Zone.Identifier
 line
+calandarReader.py
