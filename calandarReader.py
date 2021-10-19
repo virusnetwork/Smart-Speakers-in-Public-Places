@@ -5,6 +5,9 @@ from numpy import empty
 import pandas as pd
 
 LOCATION = 'CF104'
+TIMETABLE = ''
+COLOUMN_LIST = []
+
 
 class lab:
     name: str
@@ -24,32 +27,24 @@ class lab:
 
 
 
-timetable = pd.read_html(open('FSE Intranet - Timetable.html', 'r').read())
-timetable = timetable[0]
-timetable.to_csv('timetable')
+
 # Store coloumn names as they change each week
 # index 0 of coloumns is not needed 
-coloumnList = timetable.columns[1:5]
 
 
-
-#Reads Line of table and turns all labs in said slot into objects stored in a list
-commaLine = str(timetable[coloumnList[3]][0]).split('CS')
-listOfLabs = []
-for item in commaLine:
-    x = item.split('  ')
-    x = list(filter(None,x))
-    if not x :
-        del x
-    else:
-        if len(x) == 4:
-            listOfLabs.append(lab('CS' + x[0],x[2],x[3]))
-        elif len(x) == 3:
-            listOfLabs.append(lab('CS' + x[0],x[1],x[2]))
-
+def getTimetable():
+    #try website if not use html
+    global TIMETABLE
+    TIMETABLE = pd.read_html(open('FSE Intranet - Timetable.html', 'r').read())
+    TIMETABLE = TIMETABLE[0]
+    global COLOUMN_LIST
+    COLOUMN_LIST = TIMETABLE.columns[1:5]
 
 
 def getLabSlot():
+    if not TIMETABLE:
+        getTimetable() 
+
     day = int(datetime.now().strftime('%u'))
     hour = int(datetime.now().strftime('%H'))
     
@@ -57,7 +52,7 @@ def getLabSlot():
     if day > 4 or hour > 18 or hour < 9:
         return []
 
-    commaLine = str(timetable[getColoumnName(day)][getRow(hour)]).split('CS')
+    commaLine = str(TIMETABLE[getColoumnName(day)][getRow(hour)]).split('CS')
     listOfLabs = []
     for item in commaLine:
         x = item.split('  ')
@@ -70,7 +65,7 @@ def getLabSlot():
     return listOfLabs
 
 def getColoumnName(num) -> str:
-    return coloumnList[num-1]
+    return COLOUMN_LIST[num-1]
 
 def getRow(num) -> int:
     #9am == 0
