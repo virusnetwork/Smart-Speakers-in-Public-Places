@@ -18,9 +18,9 @@ class lab:
         self.name = name
         self.duration = duration
         if ',' in location:
-            self.location = location.split(',')
+            self.location = [x.strip() for x in location.split(',')]
         else:
-            self.location.append(location)
+            self.location.append(str(location).strip())
     
     def __str__(self) -> str:
         return 'Module:\t\t' + self.name + '\n'+ 'Duration:\t' + self.duration +'\n' + 'Location:\t' + str(self.location)
