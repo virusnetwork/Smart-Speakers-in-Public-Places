@@ -3,12 +3,69 @@ from lxml import html
 from numpy import empty
 #import requests
 import pandas as pd
+import speech_recognition as sr
 
 LOCATION = 'CF104'
 TIMETABLE = ''
 COLOUMN_LIST = []
 
+# microphone set up
 
+
+def listen():
+    # create recognizer and mic instances
+    recognizer = sr.Recognizer()
+    microphone = sr.Microphone()
+
+    return speech_from_mic(recognizer, microphone)
+
+
+def speech_from_mic(audio_recognizer, usb_microphone):
+    """takes speech from microphone turn to text
+    returns a directory with one of 3 values
+    "success" : boolean saying API request was successful or not
+    "error": none if no errors otherwise a string containing the error
+    "transcription": none if speech could not be transcribed else a string
+    """
+
+    # check that recognizer and microphone are appropriate types
+    if not isinstance(audio_recognizer, sr.Recognizer):
+        raise TypeError("`recognizer` must be `Recognizer` instance")
+
+    if not isinstance(usb_microphone, sr.Microphone):
+        raise TypeError("microphone object must be of sr.Microphone")
+
+    # we adjust ambient sensitivity to ambient noise
+    # then we record from microphone and save as var audio
+    with usb_microphone as source:
+        audio_recognizer.adjust_for_ambient_noise(source)
+        audio = audio_recognizer.listen(source)
+
+    # setting up response object
+    response = {
+        "success": True,
+        "error": None,
+        "transcription": None
+    }
+
+    # try recognizing the speech in the recoding (audio)
+    # if a RequestError or unknown value error exception is caught,
+    #   update the response object
+    try:
+        response["transcription"] = audio_recognizer.recognize_google(
+            audio, language="en-GB")
+    except sr.RequestError:
+        # API was unreachable or unresponsive
+        response["success"] = False
+        response["error"] = "API unavailable"
+    except sr.UnknownValueError:
+        # speech was untranslatable
+        response["error"] = "Unable to recognize speech"
+
+    return response
+
+
+# lab set up
 class lab:
     name: str
     duration: str
@@ -80,3 +137,14 @@ for x in getLabSlot():
     print(x)
 
 # TODO: added main method
+
+
+def answerQuetion() -> None:
+    speech = listen()
+    if speech["error"]:
+        print("ERROR: {}".format(speech["error"]))
+        # if error is because speech is untranslatable tell user and carry on
+        if speech["error"] == "Unable to recognize speech":
+            print("I don't understand")
+        else:
+            pass
