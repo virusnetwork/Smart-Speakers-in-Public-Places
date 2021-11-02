@@ -1,11 +1,12 @@
 from datetime import datetime, time
 from lxml import html
 from numpy import empty
+import pyttsx3
 #import requests
 import pandas as pd
 import speech_recognition as sr
 
-LOCATION = 'CF104'
+LOCATION = 'Computational Foundry 104 PC'
 TIMETABLE = ''
 COLOUMN_LIST = []
 
@@ -65,6 +66,19 @@ def speech_from_mic(audio_recognizer, usb_microphone):
     return response
 
 
+def text_to_speech(text):
+    """
+    takes a string and plays said string in speech
+    :param text: string of what will be said
+    :return: nothing
+    """
+    # take text and turn it into speech
+    engine = pyttsx3.init()
+    engine.say(text)
+    engine.runAndWait()
+    engine.stop()
+
+
 # lab set up
 class lab:
     name: str
@@ -105,12 +119,13 @@ def getLabSlot():
 
     day = int(datetime.now().strftime('%u'))
     hour = int(datetime.now().strftime('%H'))
+    hour = 9
 
     # If it's the weekend or it's before 9am and after 6pm
     if day > 4 or hour > 18 or hour < 9:
         return []
 
-    commaLine = str(TIMETABLE[getColoumnName(day)][getRow(hour)]).split('CS')
+    commaLine = str(TIMETABLE[getColoumnName(day)][getRow(9)]).split('CS')
     listOfLabs = []
     for item in commaLine:
         x = item.split('  ')
@@ -133,8 +148,18 @@ def getRow(num) -> int:
     return num - 9
 
 
-for x in getLabSlot():
-    print(x)
+def labFree(location) -> bool:
+    listOfLabs = getLabSlot()
+    for x in listOfLabs:
+        if location in x.location:
+            text_to_speech("The lab is not free")
+            return False
+
+    text_to_speech("The lab is free")
+    return True
+
+
+print(labFree(LOCATION))
 
 # TODO: added main method
 
