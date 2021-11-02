@@ -1,14 +1,12 @@
-from datetime import datetime, time
-from lxml import html
-from numpy import empty
-import pyttsx3
-#import requests
+from datetime import datetime
 import pandas as pd
+import pyttsx3
 import speech_recognition as sr
 
 LOCATION = 'Computational Foundry 104 PC'
 TIMETABLE = ''
-COLOUMN_LIST = []
+COLUMN_LIST = []
+
 
 # microphone set up
 
@@ -72,7 +70,7 @@ def text_to_speech(text):
     :param text: string of what will be said
     :return: nothing
     """
-    # take text and turn it into speech
+    # TODO: slow talk speed
     engine = pyttsx3.init()
     engine.say(text)
     engine.runAndWait()
@@ -80,10 +78,11 @@ def text_to_speech(text):
 
 
 # lab set up
-class lab:
+class LabClass:
     name: str
     duration: str
     location = []
+
     # TODO: save when lab starts or ends
 
     def __init__(self, name, duration, location) -> None:
@@ -95,62 +94,63 @@ class lab:
             self.location.append(str(location).strip())
 
     def __str__(self) -> str:
-        return 'Module:\t\t' + self.name + '\n' + 'Duration:\t' + self.duration + '\n' + 'Location:\t' + str(self.location)
+        return 'Module:\t\t' + self.name + '\n' + 'Duration:\t' + self.duration + '\n' + 'Location:\t' + str(
+            self.location)
 
 
-# Store coloumn names as they change each week
-# index 0 of coloumns is not needed
+# Store column names as they change each week
+# index 0 of columns is not needed
 
 
-def getTimetable():
+def get_timetable():
     # TODO: get timetable from website
     # try website if not use html
     global TIMETABLE
     TIMETABLE = pd.read_html(open('FSE Intranet - Timetable.html', 'r').read())
     TIMETABLE = TIMETABLE[0]
-    global COLOUMN_LIST
-    COLOUMN_LIST = TIMETABLE.columns[1:5]
+    global COLUMN_LIST
+    COLUMN_LIST = TIMETABLE.columns[1:5]
 
 
 # TODO: get lab slot for given times, location etc.
-def getLabSlot():
+def get_lab_slot():
     if not TIMETABLE:
-        getTimetable()
+        get_timetable()
 
     day = int(datetime.now().strftime('%u'))
     hour = int(datetime.now().strftime('%H'))
-    hour = 9
 
     # If it's the weekend or it's before 9am and after 6pm
     if day > 4 or hour > 18 or hour < 9:
         return []
 
-    commaLine = str(TIMETABLE[getColoumnName(day)][getRow(9)]).split('CS')
-    listOfLabs = []
-    for item in commaLine:
+    # noinspection PyTypeChecker
+    comma_line = str(TIMETABLE[get_column_name(day)][get_row(hour)]).split('CS')
+    list_of_labs = []
+    for item in comma_line:
         x = item.split('  ')
         x = list(filter(None, x))
         if len(x) == 4:
-            listOfLabs.append(lab('CS' + x[0], x[2], x[3]))
+            list_of_labs.append(LabClass('CS' + x[0], x[2], x[3]))
         elif len(x) == 3:
-            listOfLabs.append(lab('CS' + x[0], x[1], x[2]))
+            list_of_labs.append(LabClass('CS' + x[0], x[1], x[2]))
 
-    return listOfLabs
-
-
-def getColoumnName(num) -> str:
-    return COLOUMN_LIST[num-1]
+    return list_of_labs
 
 
-def getRow(num) -> int:
+def get_column_name(num):
+    return COLUMN_LIST[num - 1]
+
+
+def get_row(num) -> int:
     # 9am == 0
     # 5pm == 8
     return num - 9
 
 
-def labFree(location) -> bool:
-    listOfLabs = getLabSlot()
-    for x in listOfLabs:
+def lab_free(location) -> bool:
+    list_of_labs = get_lab_slot()
+    for x in list_of_labs:
         if location in x.location:
             text_to_speech("The lab is not free")
             return False
@@ -159,17 +159,6 @@ def labFree(location) -> bool:
     return True
 
 
-print(labFree(LOCATION))
+print(lab_free(LOCATION))
 
 # TODO: added main method
-
-
-def answerQuetion() -> None:
-    speech = listen()
-    if speech["error"]:
-        print("ERROR: {}".format(speech["error"]))
-        # if error is because speech is untranslatable tell user and carry on
-        if speech["error"] == "Unable to recognize speech":
-            print("I don't understand")
-        else:
-            pass
