@@ -5,8 +5,7 @@ import speech_recognition as sr
 import re
 
 LOCATION = 'Computational Foundry 104 PC'
-TIMETABLE = ''
-COLUMN_LIST = []
+COLUMN_LIST: list
 
 
 # microphone set up
@@ -106,28 +105,30 @@ class LabClass:
 def get_timetable():
     # TODO: get timetable from website
     # try website if not use html
-    global TIMETABLE
-    TIMETABLE = pd.read_html(open('FSE Intranet - Timetable.html', 'r').read())
-    TIMETABLE = TIMETABLE[0]
+    timetable = pd.read_html(open('FSE Intranet - Timetable.html', 'r').read())
+    timetable = timetable[0]
     global COLUMN_LIST
-    COLUMN_LIST = TIMETABLE.columns[1:6]
+    COLUMN_LIST = timetable.columns[1:6]
+    return timetable
 
 
 # TODO: get lab slot for given times, location etc.
 def get_lab_slot():
-    if not TIMETABLE:
-        get_timetable()
+
+    timetable = get_timetable()
 
     day = int(datetime.now().strftime('%u'))
     hour = int(datetime.now().strftime('%H'))
+    day = 5
+    hour = 11
     # If it's the weekend or it's before 9am and after 6pm
     if day > 5 or hour < 9 or hour > 18:
         return []
 
     # noinspection PyTypeChecker
-    comma_line = str(TIMETABLE[get_column_name(day)][get_row(hour)])
+    comma_line = str(timetable[get_column_name(day)][get_row(hour)])
     print(comma_line)
-    re.split('CS', comma_line)
+    comma_line = re.split('MA-|CS', comma_line)
     list_of_labs = []
     for item in comma_line:
         x = item.split('  ')
@@ -162,5 +163,8 @@ def lab_free(location) -> bool:
 
 
 print(lab_free(LOCATION))
+y = get_lab_slot()
+for aaa in y:
+    print(aaa)
 
 # TODO: added main method
