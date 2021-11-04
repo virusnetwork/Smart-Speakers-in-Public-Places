@@ -10,14 +10,12 @@ COLUMN_LIST: list
 
 
 # write to JSON file
-def write_to_json(speech: str, success: bool):
-    if not speech:
-        speech = 'Error'
+def write_to_json(transcript_from_speech: str, success=False):
     data = {'speech events': []}
     data['speech events'].append({
-        'date': datetime.now('%x'),
-        'time': datetime.now('%X'),
-        'speech': speech,
+        'date': datetime.now().strftime('%x'),
+        'time': datetime.now().strftime('%X'),
+        'speech': transcript_from_speech,
         'successes': success
     })
 
@@ -143,13 +141,11 @@ def get_lab_slot():
     print(comma_line)
     comma_line = re.split('MA-|CS', comma_line)
     list_of_labs = []
-    # TODO fix this crap
     for item in comma_line:
         x = item.split('  ')
         x = list(filter(None, x))
         if not x:
             continue
-        print(x)
         if x[0] == '-009' or x[0] == '-181':
             list_of_labs.append(LabClass('MA' + x[0], x[2], x[3]))
         elif len(x) == 4:
@@ -180,5 +176,17 @@ def lab_free(location) -> bool:
     text_to_speech("The lab is free")
     return True
 
-# TODO: Write speech to text
-# TODO: added main method
+
+if __name__ == '__main__':
+    # TODO: create function to get button input
+    if input('press a key'):
+        speech = listen()
+        if speech['error']:
+            write_to_json(speech['error'])
+        else:
+            txt = speech['transcription'].lower()
+            if 'is the lab free' in txt:
+                lab_free(LOCATION)
+                write_to_json(txt, True)
+            else:
+                write_to_json(txt)
