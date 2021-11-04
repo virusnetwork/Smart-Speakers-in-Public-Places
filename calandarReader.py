@@ -3,14 +3,29 @@ import pandas as pd
 import pyttsx3
 import speech_recognition as sr
 import re
+import json
 
 LOCATION = 'Computational Foundry 104 PC'
 COLUMN_LIST: list
 
 
+# write to JSON file
+def write_to_json(speech: str, success: bool):
+    if not speech:
+        speech = 'Error'
+    data = {'speech events': []}
+    data['speech events'].append({
+        'date': datetime.now('%x'),
+        'time': datetime.now('%X'),
+        'speech': speech,
+        'successes': success
+    })
+
+    with open("data.json", "a") as outfile:
+        json.dump(data, outfile)
+
+
 # microphone set up
-
-
 def listen():
     # create recognizer and mic instances
     recognizer = sr.Recognizer()
@@ -114,13 +129,11 @@ def get_timetable():
 
 # TODO: get lab slot for given times, location etc.
 def get_lab_slot():
-
     timetable = get_timetable()
 
     day = int(datetime.now().strftime('%u'))
     hour = int(datetime.now().strftime('%H'))
-    day = 5
-    hour = 11
+
     # If it's the weekend or it's before 9am and after 6pm
     if day > 5 or hour < 9 or hour > 18:
         return []
@@ -130,10 +143,16 @@ def get_lab_slot():
     print(comma_line)
     comma_line = re.split('MA-|CS', comma_line)
     list_of_labs = []
+    # TODO fix this crap
     for item in comma_line:
         x = item.split('  ')
         x = list(filter(None, x))
-        if len(x) == 4:
+        if not x:
+            continue
+        print(x)
+        if x[0] == '-009' or x[0] == '-181':
+            list_of_labs.append(LabClass('MA' + x[0], x[2], x[3]))
+        elif len(x) == 4:
             list_of_labs.append(LabClass('CS' + x[0], x[2], x[3]))
         elif len(x) == 3:
             list_of_labs.append(LabClass('CS' + x[0], x[1], x[2]))
@@ -161,10 +180,5 @@ def lab_free(location) -> bool:
     text_to_speech("The lab is free")
     return True
 
-
-print(lab_free(LOCATION))
-y = get_lab_slot()
-for aaa in y:
-    print(aaa)
-
+# TODO: Write speech to text
 # TODO: added main method
