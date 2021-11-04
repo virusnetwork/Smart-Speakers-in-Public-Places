@@ -2,6 +2,7 @@ from datetime import datetime
 import pandas as pd
 import pyttsx3
 import speech_recognition as sr
+import re
 
 LOCATION = 'Computational Foundry 104 PC'
 TIMETABLE = ''
@@ -109,7 +110,7 @@ def get_timetable():
     TIMETABLE = pd.read_html(open('FSE Intranet - Timetable.html', 'r').read())
     TIMETABLE = TIMETABLE[0]
     global COLUMN_LIST
-    COLUMN_LIST = TIMETABLE.columns[1:5]
+    COLUMN_LIST = TIMETABLE.columns[1:6]
 
 
 # TODO: get lab slot for given times, location etc.
@@ -119,13 +120,14 @@ def get_lab_slot():
 
     day = int(datetime.now().strftime('%u'))
     hour = int(datetime.now().strftime('%H'))
-
     # If it's the weekend or it's before 9am and after 6pm
-    if day > 4 or hour > 18 or hour < 9:
+    if day > 5 or hour < 9 or hour > 18:
         return []
 
     # noinspection PyTypeChecker
-    comma_line = str(TIMETABLE[get_column_name(day)][get_row(hour)]).split('CS')
+    comma_line = str(TIMETABLE[get_column_name(day)][get_row(hour)])
+    print(comma_line)
+    re.split('CS', comma_line)
     list_of_labs = []
     for item in comma_line:
         x = item.split('  ')
