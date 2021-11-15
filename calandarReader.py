@@ -1,4 +1,5 @@
 from datetime import datetime
+from os import path
 import pandas as pd
 import pyttsx3
 import speech_recognition as sr
@@ -10,17 +11,21 @@ COLUMN_LIST: list
 
 
 # write to JSON file
-def write_to_json(transcript_from_speech: str, success=False):
-    data = {'speech events': []}
-    data['speech events'].append({
+def write_to_json(transcript_from_speech: str | None, output: str, success: bool = False):
+    new_event = {
         'date': datetime.now().strftime('%x'),
         'time': datetime.now().strftime('%X'),
         'speech': transcript_from_speech,
-        'successes': success
-    })
+        'output': output,
+        'success': success}
 
-    with open("data.json", "a") as outfile:
-        json.dump(data, outfile)
+    with open('data.json', 'r+') as json_file:
+        data = json.load(json_file)
+        data.append(new_event)
+        json_file.seek(0)
+        json_file.write(json.dumps(data))
+        json_file.truncate()
+        json_file.close()
 
 
 # microphone set up
@@ -77,7 +82,7 @@ def speech_from_mic(audio_recognizer, usb_microphone):
     return response
 
 
-def text_to_speech(text):
+def text_to_speech(text) -> None:
     """
     takes a string and plays said string in speech
     :param text: string of what will be said
@@ -134,6 +139,7 @@ def get_lab_slot():
 
     # If it's the weekend or it's before 9am and after 6pm
     if day > 5 or hour < 9 or hour > 18:
+        # TODO: tell people to go home when its closed
         return []
 
     # noinspection PyTypeChecker
@@ -156,7 +162,7 @@ def get_lab_slot():
     return list_of_labs
 
 
-def get_column_name(num):
+def get_column_name(num) -> list:
     return COLUMN_LIST[num - 1]
 
 
@@ -166,15 +172,15 @@ def get_row(num) -> int:
     return num - 9
 
 
-def lab_free(location) -> bool:
+def lab_free(location=LOCATION) -> bool:
     list_of_labs = get_lab_slot()
     for x in list_of_labs:
         if location in x.location:
             text_to_speech("The lab is not free")
             return False
-
-    text_to_speech("The lab is free")
-    return True
+        else:
+            text_to_speech("The lab is free")
+            return True
 
 
 if __name__ == '__main__':
@@ -182,11 +188,15 @@ if __name__ == '__main__':
     if input('press a key'):
         speech = listen()
         if speech['error']:
-            write_to_json(speech['error'])
+            write_to_json(None, speech['error'])
         else:
             txt = speech['transcription'].lower()
             if 'is the lab free' in txt:
-                lab_free(LOCATION)
-                write_to_json(txt, True)
+                if lab_free():
+                    write_to_json(txt, "The lab is free", True)
+                else:
+                    write_to_json(txt, "The lab is not free", True)
             else:
-                write_to_json(txt)
+                write_to_json(txt, "I don't understand")
+
+# TODO: Get lab locations

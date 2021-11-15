@@ -1,10 +1,51 @@
-{
-  "speech events": [
-    {
-      "date": "11/04/21",
-      "time": "16:12:56",
-      "speech": "is the lab free",
-      "successes": true
-    }
-  ]
-}
+[
+  {
+    "date": "11/15/21",
+    "time": "12:26:09",
+    "speech": "is the lab free",
+    "output": "The lab is not free",
+    "success": true
+  },
+  {
+    "date": "11/15/21",
+    "time": "12:26:24",
+    "speech": "Unable to recognize speech",
+    "output": ,
+    "success": false
+  },
+  {
+    "date": "11/15/21",
+    "time": "12:40:04",
+    "speech": "is the lab free",
+    "output": "The lab is not free",
+    "success": true
+  },
+  {
+    "date": "11/15/21",
+    "time": "12:42:17",
+    "speech": "is the lab closed",
+    "output": "I don't understand",
+    "success": false
+  },
+  {
+    "date": "11/15/21",
+    "time": "12:43:23",
+    "speech": "is the lamb closed",
+    "output": "I don't understand",
+    "success": false
+  },
+  {
+    "date": "11/15/21",
+    "time": "14:24:37",
+    "speech": "is the library open",
+    "output": "I don't understand",
+    "success": false
+  },
+  {
+    "date": "11/15/21",
+    "time": "14:30:16",
+    "speech": "set alarm for 5",
+    "output": "I don't understand",
+    "success": false
+  }
+]
