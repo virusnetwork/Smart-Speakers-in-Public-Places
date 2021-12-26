@@ -8,13 +8,6 @@
   },
   {
     "date": "11/15/21",
-    "time": "12:26:24",
-    "speech": "Unable to recognize speech",
-    "output": ,
-    "success": false
-  },
-  {
-    "date": "11/15/21",
     "time": "12:40:04",
     "speech": "is the lab free",
     "output": "The lab is not free",
@@ -47,5 +40,12 @@
     "speech": "set alarm for 5",
     "output": "I don't understand",
     "success": false
+  },
+  {
+    "date": "12/26/21",
+    "time": "16:38:47",
+    "speech": "is the lab free",
+    "output": "The lab is not free",
+    "success": true
   }
 ]

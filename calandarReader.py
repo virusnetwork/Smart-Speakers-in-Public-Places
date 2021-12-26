@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
 from datetime import datetime
-from os import path
-from aiy.cloudspeech import CloudSpeechClient
 import pandas as pd
 import pyttsx3
 import speech_recognition as sr
