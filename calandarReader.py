@@ -25,9 +25,10 @@ LOCATION = 'Computational Foundry 104 PC'
 COLUMN_LIST: list
 
 logging.basicConfig(level=logging.DEBUG,
-format='%(asctime)s %(levelname)s %(message)s',
-      filename='myapp.log',
-      filemode='w')
+                    format='%(asctime)s %(levelname)s %(message)s',
+                    filename='myapp.log',
+                    filemode='w')
+
 
 def get_distance() -> bool:
     # set Trigger to HIGH
@@ -81,7 +82,7 @@ def write_to_json(transcript_from_speech: str, output: str, success: bool = Fals
 def listen():
     # create recognizer and mic instances
     recognizer = sr.Recognizer()
-    microphone = sr.Microphone()
+    microphone = sr.Microphone(device_index=1)
 
     recognizer.energy_threshold = 653
     recognizer.dynamic_energy_threshold = True
@@ -140,8 +141,8 @@ def text_to_speech(text) -> None:
     :param text: string of what will be said
     :return: nothing
     """
-    return
     # TODO: slow talk speed
+    # BUG: Works once then won't work again
     engine = pyttsx3.init()
     engine.say(text)
     engine.runAndWait()
@@ -239,26 +240,27 @@ def lab_free(location=LOCATION) -> bool:
 def main():
     # TODO: create function to get button input
     while True:
-        print("Activate systems!!")
-        if(get_distance):
+        if(get_distance()):
             print("Speak now!!!")
             logging.info("System Activated")
             speech = listen()
             if speech['error']:
                 logging.error("speech error occured")
                 print("speach error")
+                text_to_speech("I don't undertsand")
                 write_to_json('', speech['error'])
             else:
                 print("no error")
                 logging.info("speech understood")
                 txt = speech['transcription'].lower()
                 logging.info(txt)
-                if 'is the lab free' in txt:
+                if 'is the lab free' or 'is the lamb free' in txt:
                     if lab_free():
                         write_to_json(txt, "The lab is free", True)
                     else:
                         write_to_json(txt, "The lab is not free", True)
                 else:
+                    text_to_speech("I don't know how to answer")
                     write_to_json(txt, "I don't understand")
 
 
@@ -269,3 +271,4 @@ if __name__ == '__main__':
         GPIO.cleanup()
 
 # TODO: Get lab locations
+# TODO: Which labs are free
