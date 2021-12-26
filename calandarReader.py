@@ -8,6 +8,7 @@ import re
 import json
 import RPi.GPIO as GPIO
 import time
+import logging
 
 # GPIO Mode (BOARD / BCM)
 GPIO.setmode(GPIO.BCM)
@@ -23,6 +24,10 @@ GPIO.setup(GPIO_ECHO, GPIO.IN)
 LOCATION = 'Computational Foundry 104 PC'
 COLUMN_LIST: list
 
+logging.basicConfig(level=logging.DEBUG,
+format='%(asctime)s %(levelname)s %(message)s',
+      filename='myapp.log',
+      filemode='w')
 
 def get_distance() -> bool:
     # set Trigger to HIGH
@@ -234,12 +239,20 @@ def lab_free(location=LOCATION) -> bool:
 def main():
     # TODO: create function to get button input
     while True:
+        print("Activate systems!!")
         if(get_distance):
+            print("Speak now!!!")
+            logging.info("System Activated")
             speech = listen()
             if speech['error']:
+                logging.error("speech error occured")
+                print("speach error")
                 write_to_json('', speech['error'])
             else:
+                print("no error")
+                logging.info("speech understood")
                 txt = speech['transcription'].lower()
+                logging.info(txt)
                 if 'is the lab free' in txt:
                     if lab_free():
                         write_to_json(txt, "The lab is free", True)
