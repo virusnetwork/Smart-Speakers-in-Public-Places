@@ -2,8 +2,7 @@
 
 from datetime import datetime
 from os import path
-from aiy.board import Board, Led
-#from aiy.cloudspeech import CloudSpeechClient
+from aiy.cloudspeech import CloudSpeechClient
 import pandas as pd
 import pyttsx3
 import speech_recognition as sr
@@ -253,6 +252,9 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        GPIO.cleanup()
 
 # TODO: Get lab locations
