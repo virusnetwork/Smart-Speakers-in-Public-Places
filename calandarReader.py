@@ -9,12 +9,54 @@ import pyttsx3
 import speech_recognition as sr
 import re
 import json
+import RPi.GPIO as GPIO
+import time
+
+# GPIO Mode (BOARD / BCM)
+GPIO.setmode(GPIO.BCM)
+
+# set GPIO Pins
+GPIO_TRIGGER = 7
+GPIO_ECHO = 8
+
+# set GPIO direction (IN / OUT)
+GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
+GPIO.setup(GPIO_ECHO, GPIO.IN)
 
 LOCATION = 'Computational Foundry 104 PC'
 COLUMN_LIST: list
 
 
+def get_distance() -> bool:
+    # set Trigger to HIGH
+    GPIO.output(GPIO_TRIGGER, True)
+
+    # set Trigger after 0.01ms to LOW
+    time.sleep(0.00001)
+    GPIO.output(GPIO_TRIGGER, False)
+
+    StartTime = time.time()
+    StopTime = time.time()
+
+    # save StartTime
+    while GPIO.input(GPIO_ECHO) == 0:
+        StartTime = time.time()
+
+    # save time of arrival
+    while GPIO.input(GPIO_ECHO) == 1:
+        StopTime = time.time()
+
+    # time difference between start and arrival
+    TimeElapsed = StopTime - StartTime
+    # multiply with the sonic speed (34300 cm/s)
+    # and divide by 2, because there and back
+    distance = (TimeElapsed * 34300) / 2
+
+    return distance < 15.0
+
 # write to JSON file
+
+
 def write_to_json(transcript_from_speech: str, output: str, success: bool = False):
     new_event = {
         'date': datetime.now().strftime('%x'),
@@ -96,6 +138,7 @@ def text_to_speech(text) -> None:
     :param text: string of what will be said
     :return: nothing
     """
+    return
     # TODO: slow talk speed
     engine = pyttsx3.init()
     engine.say(text)
@@ -194,19 +237,19 @@ def lab_free(location=LOCATION) -> bool:
 def main():
     # TODO: create function to get button input
     while True:
-        Board().button.wait_for_press()
-        speech = listen()
-        if speech['error']:
-            write_to_json('', speech['error'])
-        else:
-            txt = speech['transcription'].lower()
-            if 'is the lab free' in txt:
-                if lab_free():
-                    write_to_json(txt, "The lab is free", True)
-                else:
-                    write_to_json(txt, "The lab is not free", True)
+        if(get_distance):
+            speech = listen()
+            if speech['error']:
+                write_to_json('', speech['error'])
             else:
-                write_to_json(txt, "I don't understand")
+                txt = speech['transcription'].lower()
+                if 'is the lab free' in txt:
+                    if lab_free():
+                        write_to_json(txt, "The lab is free", True)
+                    else:
+                        write_to_json(txt, "The lab is not free", True)
+                else:
+                    write_to_json(txt, "I don't understand")
 
 
 if __name__ == '__main__':
