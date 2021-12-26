@@ -1,5 +1,9 @@
+#!/usr/bin/env python3
+
 from datetime import datetime
 from os import path
+from aiy.board import Board, Led
+#from aiy.cloudspeech import CloudSpeechClient
 import pandas as pd
 import pyttsx3
 import speech_recognition as sr
@@ -27,12 +31,16 @@ def write_to_json(transcript_from_speech: str | None, output: str, success: bool
         json_file.truncate()
         json_file.close()
 
-
 # microphone set up
+
+
 def listen():
     # create recognizer and mic instances
     recognizer = sr.Recognizer()
     microphone = sr.Microphone()
+
+    recognizer.energy_threshold = 653
+    recognizer.dynamic_energy_threshold = True
 
     return speech_from_mic(recognizer, microphone)
 
