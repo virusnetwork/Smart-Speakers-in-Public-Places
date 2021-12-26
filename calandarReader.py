@@ -191,27 +191,25 @@ def lab_free(location=LOCATION) -> bool:
             return True
 
 
-if __name__ == '__main__':
-
-    with Board() as board:
-        print("Press button")
-        board.button.wait_for_press()
-        print("Button was pressed")
-
+def main():
     # TODO: create function to get button input
     while True:
-        if input('press a key'):
-            speech = listen()
-            if speech['error']:
-                write_to_json('', speech['error'])
-            else:
-                txt = speech['transcription'].lower()
-                if 'is the lab free' in txt:
-                    if lab_free():
-                        write_to_json(txt, "The lab is free", True)
-                    else:
-                        write_to_json(txt, "The lab is not free", True)
+        Board().button.wait_for_press()
+        speech = listen()
+        if speech['error']:
+            write_to_json('', speech['error'])
+        else:
+            txt = speech['transcription'].lower()
+            if 'is the lab free' in txt:
+                if lab_free():
+                    write_to_json(txt, "The lab is free", True)
                 else:
-                    write_to_json(txt, "I don't understand")
+                    write_to_json(txt, "The lab is not free", True)
+            else:
+                write_to_json(txt, "I don't understand")
+
+
+if __name__ == '__main__':
+    main()
 
 # TODO: Get lab locations
