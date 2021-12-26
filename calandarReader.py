@@ -15,7 +15,7 @@ COLUMN_LIST: list
 
 
 # write to JSON file
-def write_to_json(transcript_from_speech: str | None, output: str, success: bool = False):
+def write_to_json(transcript_from_speech: str, output: str, success: bool = False):
     new_event = {
         'date': datetime.now().strftime('%x'),
         'time': datetime.now().strftime('%X'),
@@ -192,19 +192,26 @@ def lab_free(location=LOCATION) -> bool:
 
 
 if __name__ == '__main__':
+
+    with Board() as board:
+        print("Press button")
+        board.button.wait_for_press()
+        print("Button was pressed")
+
     # TODO: create function to get button input
-    if input('press a key'):
-        speech = listen()
-        if speech['error']:
-            write_to_json(None, speech['error'])
-        else:
-            txt = speech['transcription'].lower()
-            if 'is the lab free' in txt:
-                if lab_free():
-                    write_to_json(txt, "The lab is free", True)
-                else:
-                    write_to_json(txt, "The lab is not free", True)
+    while True:
+        if input('press a key'):
+            speech = listen()
+            if speech['error']:
+                write_to_json('', speech['error'])
             else:
-                write_to_json(txt, "I don't understand")
+                txt = speech['transcription'].lower()
+                if 'is the lab free' in txt:
+                    if lab_free():
+                        write_to_json(txt, "The lab is free", True)
+                    else:
+                        write_to_json(txt, "The lab is not free", True)
+                else:
+                    write_to_json(txt, "I don't understand")
 
 # TODO: Get lab locations
