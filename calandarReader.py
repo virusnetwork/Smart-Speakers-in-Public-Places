@@ -31,21 +31,17 @@ logging.basicConfig(level=logging.DEBUG,
 
 
 def get_distance() -> bool:
-    # set Trigger to HIGH
-    GPIO.output(GPIO_TRIGGER, True)
 
-    # set Trigger after 0.01ms to LOW
+    GPIO.output(GPIO_TRIGGER, True)
     time.sleep(0.00001)
     GPIO.output(GPIO_TRIGGER, False)
 
     StartTime = time.time()
     StopTime = time.time()
 
-    # save StartTime
     while GPIO.input(GPIO_ECHO) == 0:
         StartTime = time.time()
 
-    # save time of arrival
     while GPIO.input(GPIO_ECHO) == 1:
         StopTime = time.time()
 
@@ -55,6 +51,7 @@ def get_distance() -> bool:
     # and divide by 2, because there and back
     distance = (TimeElapsed * 34300) / 2
 
+    # * distance is represents cm
     return distance < 15.0
 
 # write to JSON file
@@ -75,8 +72,6 @@ def write_to_json(transcript_from_speech: str, output: str, success: bool = Fals
         json_file.write(json.dumps(data))
         json_file.truncate()
         json_file.close()
-
-# microphone set up
 
 
 def listen():
@@ -198,7 +193,6 @@ def get_lab_slot():
 
     # noinspection PyTypeChecker
     comma_line = str(timetable[get_column_name(day)][get_row(hour)])
-    print(comma_line)
     comma_line = re.split('MA-|CS', comma_line)
     list_of_labs = []
     for item in comma_line:
@@ -238,10 +232,9 @@ def lab_free(location=LOCATION) -> bool:
 
 
 def main():
-    # TODO: create function to get button input
     while True:
         if(get_distance()):
-            print("Speak now!!!")
+            text_to_speech("How can i help?")
             logging.info("System Activated")
             speech = listen()
             if speech['error']:
