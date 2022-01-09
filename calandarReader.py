@@ -16,6 +16,7 @@ POSSIBLE_INPUT = ('is this lab free','is the lab free','is the lamb free','CF203
 
 # GPIO Mode (BOARD / BCM)
 GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
 
 # set GPIO Pins
 GPIO_TRIGGER = 7
