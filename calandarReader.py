@@ -140,10 +140,9 @@ def text_to_speech(text) -> None:
     """
     # TODO: slow talk speed
     # BUG: Works once then won't work again
-    engine = pyttsx3.init()
-    engine.say(text)
-    engine.runAndWait()
-    engine.stop()
+    engine = pyttsx3.init();
+    engine.say(text);
+    engine.runAndWait();
 
 
 # lab set up
@@ -193,7 +192,6 @@ def get_lab_slot():
         # TODO: tell people to go home when its closed
         return []
 
-    # noinspection PyTypeChecker
     comma_line = str(timetable[get_column_name(day)][get_row(hour)])
     comma_line = re.split('MA-|CS', comma_line)
     list_of_labs = []
