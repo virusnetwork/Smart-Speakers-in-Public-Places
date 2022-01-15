@@ -186,17 +186,17 @@ def get_timetable():
 def get_lab_slot():
     timetable = get_timetable()
     
+    #Monday = 1, Friday = 5
     day = int(datetime.now().strftime('%u'))
     hour = int(datetime.now().strftime('%H'))
 
     # If it's the weekend or it's before 9am and after 6pm
-    #if day > 5 or hour < 9 or hour > 18:
-      #  # TODO: tell people to go home when its closed
-     #   return []
-    day = 1
-    hour =11
+    if day > 5 or hour < 9 or hour > 18:
+        # TODO: tell people to go home when its closed
+        return []
 
     comma_line = str(timetable[get_column_name(day)][get_row(hour)])
+  
     comma_line = re.split('MA-|CS', comma_line)
     list_of_labs = []
     for item in comma_line:
@@ -223,18 +223,18 @@ def get_row(num) -> int:
     # 5pm == 8
     return num - 9
 
-
+#TODO: create function to find WHAT labs are free
 def lab_free(location=LOCATION) -> bool:
-    print("in lab free")
     list_of_labs = get_lab_slot()
-    for x in list_of_labs:
-        if location in x.location:
-            print("got this far")
-            text_to_speech("The lab is not free")
-            return False
-        else:
-            text_to_speech("The lab is free")
-            return True
+    if(list_of_labs):
+        for x in list_of_labs:
+            if location in x.location:
+                text_to_speech("The lab is not free")
+                return False    
+    
+    #if list of labs is empty or given lab is not in lab
+    text_to_speech("The lab is free")
+    return True
 
 
 def main():
@@ -245,15 +245,12 @@ def main():
             speech = listen()
             if speech['error']:
                 logging.error("speech error occured")
-                print("speach error")
                 text_to_speech("I don't undertsand")
                 write_to_json('', speech['error'])
             else:
-                print("no error")
                 logging.info("speech understood")
                 txt = speech['transcription'].lower()
                 logging.info(txt)
-                print("got this far2 ")
                 if 'is the lab free' or 'is the lamb free' in txt:
                     print("got this far")
                     if lab_free():
