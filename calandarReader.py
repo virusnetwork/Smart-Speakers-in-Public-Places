@@ -81,7 +81,8 @@ def listen():
     recognizer = sr.Recognizer()
     microphone = sr.Microphone(device_index=1)
 
-    recognizer.energy_threshold = 653
+    #! needs to be changed if microphone is changed
+    recognizer.energy_threshold = 4000
     recognizer.dynamic_energy_threshold = True
 
     return speech_from_mic(recognizer, microphone)
@@ -119,6 +120,7 @@ def speech_from_mic(audio_recognizer, usb_microphone):
     # if a RequestError or unknown value error exception is caught,
     #   update the response object
     try:
+        # ? Worth using return all 
         response["transcription"] = audio_recognizer.recognize_google(
             audio, language="en-GB")
     except sr.RequestError:
@@ -183,14 +185,16 @@ def get_timetable():
 # TODO: get lab slot for given times, location etc.
 def get_lab_slot():
     timetable = get_timetable()
-
+    
     day = int(datetime.now().strftime('%u'))
     hour = int(datetime.now().strftime('%H'))
 
     # If it's the weekend or it's before 9am and after 6pm
-    if day > 5 or hour < 9 or hour > 18:
-        # TODO: tell people to go home when its closed
-        return []
+    #if day > 5 or hour < 9 or hour > 18:
+      #  # TODO: tell people to go home when its closed
+     #   return []
+    day = 1
+    hour =11
 
     comma_line = str(timetable[get_column_name(day)][get_row(hour)])
     comma_line = re.split('MA-|CS', comma_line)
@@ -221,9 +225,11 @@ def get_row(num) -> int:
 
 
 def lab_free(location=LOCATION) -> bool:
+    print("in lab free")
     list_of_labs = get_lab_slot()
     for x in list_of_labs:
         if location in x.location:
+            print("got this far")
             text_to_speech("The lab is not free")
             return False
         else:
@@ -247,7 +253,9 @@ def main():
                 logging.info("speech understood")
                 txt = speech['transcription'].lower()
                 logging.info(txt)
+                print("got this far2 ")
                 if 'is the lab free' or 'is the lamb free' in txt:
+                    print("got this far")
                     if lab_free():
                         write_to_json(txt, "The lab is free", True)
                     else:
