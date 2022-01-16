@@ -12,7 +12,8 @@ import logging
 
 LOCATION = 'Computational Foundry 104 PC'
 COLUMN_LIST: list
-POSSIBLE_INPUT = ('is this lab free','is the lab free','is the lamb free','CF203','CF204','CF104','CF103')
+POSSIBLE_INPUT = ('is this lab free', 'is the lab free', 'is the lamb free')
+LABS = ('203', '204', '104', '103')
 
 # GPIO Mode (BOARD / BCM)
 GPIO.setmode(GPIO.BCM)
@@ -81,7 +82,7 @@ def listen():
     recognizer = sr.Recognizer()
     microphone = sr.Microphone(device_index=1)
 
-    #! needs to be changed if microphone is changed
+    # * set to max (4000) to accomidation public spaces, dynamic is on so it will change
     recognizer.energy_threshold = 4000
     recognizer.dynamic_energy_threshold = True
 
@@ -120,7 +121,7 @@ def speech_from_mic(audio_recognizer, usb_microphone):
     # if a RequestError or unknown value error exception is caught,
     #   update the response object
     try:
-        # ? Worth using return all 
+        # ? Worth using return all
         response["transcription"] = audio_recognizer.recognize_google(
             audio, language="en-GB")
     except sr.RequestError:
@@ -142,9 +143,9 @@ def text_to_speech(text) -> None:
     """
     # TODO: slow talk speed
     # BUG: Works once then won't work again
-    engine = pyttsx3.init();
-    engine.say(text);
-    engine.runAndWait();
+    engine = pyttsx3.init()
+    engine.say(text)
+    engine.runAndWait()
 
 
 # lab set up
@@ -183,10 +184,10 @@ def get_timetable():
 
 
 # TODO: get lab slot for given times, location etc.
-def get_lab_slot():
+def get_lab_slots() -> list:
     timetable = get_timetable()
-    
-    #Monday = 1, Friday = 5
+
+    # Monday = 1, Friday = 5
     day = int(datetime.now().strftime('%u'))
     hour = int(datetime.now().strftime('%H'))
 
@@ -196,7 +197,7 @@ def get_lab_slot():
         return []
 
     comma_line = str(timetable[get_column_name(day)][get_row(hour)])
-  
+
     comma_line = re.split('MA-|CS', comma_line)
     list_of_labs = []
     for item in comma_line:
@@ -223,18 +224,45 @@ def get_row(num) -> int:
     # 5pm == 8
     return num - 9
 
-#TODO: create function to find WHAT labs are free
+# TODO: create function to find WHAT labs are free
+
+
 def lab_free(location=LOCATION) -> bool:
-    list_of_labs = get_lab_slot()
+    list_of_labs = get_lab_slots()
     if(list_of_labs):
         for x in list_of_labs:
             if location in x.location:
                 text_to_speech("The lab is not free")
-                return False    
-    
-    #if list of labs is empty or given lab is not in lab
+                return False
+
+    # if list of labs is empty or given lab is not in lab
     text_to_speech("The lab is free")
     return True
+
+
+def what_labs_are_free():
+    # get labs
+    list_of_labs = get_lab_slots()
+
+    # get used location
+    in_use_labs = []
+    for x in list_of_labs:
+        in_use_labs.append(x.location)
+
+    # return elements not in used location
+    free_labs = []
+    for y in LABS:
+        if y not in in_use_labs:
+            free_labs.append(y)
+
+    if free_labs:
+        txt = ''
+        for z in free_labs:
+            txt = txt + ' CF' + z
+        text_to_speech(txt)
+
+    else:
+        text_to_speech('No labs are free at the momement')
 
 
 def main():
@@ -251,7 +279,9 @@ def main():
                 logging.info("speech understood")
                 txt = speech['transcription'].lower()
                 logging.info(txt)
-                if 'is the lab free' or 'is the lamb free' in txt:
+                if 'what' in txt and 'free' in txt:
+                    what_labs_are_free()
+                elif 'is the lab free' or 'is the lamb free' in txt:
                     print("got this far")
                     if lab_free():
                         write_to_json(txt, "The lab is free", True)
