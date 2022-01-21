@@ -269,8 +269,10 @@ def main():
     while True:
         if(activate_system()):
             text_to_speech("How can i help?")
+            print("System activated")
             logging.info("System Activated")
             speech = listen()
+            print("No longer listing")
             if speech['error']:
                 logging.error("speech error occured")
                 text_to_speech("I don't undertsand")
