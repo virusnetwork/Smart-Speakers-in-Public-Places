@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 from datetime import datetime
 import pandas as pd
 import pyttsx3
@@ -11,12 +10,13 @@ import time
 import logging
 import tempfile
 import time
-from aiy.voice.audio import AudioFormat, play_wav, record_file
+from aiy.voice.audio import AudioFormat, record_file
 
-LOCATION = 'Computational Foundry 104 PC'
+LOCATION = str("Computational Foundry 104 PC")
 COLUMN_LIST: list
-POSSIBLE_INPUT = ('is this lab free', 'is the lab free', 'is the lamb free')
-LABS = ('203', '204', '104', '103')
+POSSIBLE_INPUT = ['is this lab free', 'is the lab free',
+                  'is the lamb free', 'lab free', 'lab avaible']
+LABS = [203, 204, 104, 103]
 
 # GPIO Mode (BOARD / BCM)
 GPIO.setmode(GPIO.BCM)
@@ -184,17 +184,26 @@ def get_row(num) -> int:
 # TODO: create function to find WHAT labs are free
 
 
-def lab_free(location=LOCATION) -> bool:
+def lab_free(location=LOCATION):
+    print(location)
+    if location != LOCATION:
+        if int(location) in LABS:
+            location = 'Computational Foundry ' + location + ' PC'
+
+        else:
+            text_to_speech('I do not know that lab')
+            return ('I do not know lab' + location, False)
+
     list_of_labs = get_lab_slots()
     if(list_of_labs):
         for x in list_of_labs:
             if location in x.location:
-                text_to_speech("The lab is not free")
-                return False
+                text_to_speech(location + " is not free")
+                return (location + " is not free", True)
 
     # if list of labs is empty or given lab is not in lab
-    text_to_speech("The lab is free")
-    return True
+    text_to_speech(location + " is free")
+    return (location + " is free", True)
 
 
 def what_labs_are_free():
@@ -250,15 +259,22 @@ def main():
             if 'what' in speech and 'free' in speech:
                 txt = what_labs_are_free()
                 write_to_json(speech, txt, True)
-            elif 'is the lab free' or 'is the lamb free' in speech:
-                print("got this far")
+            elif speech in POSSIBLE_INPUT:
                 if lab_free():
                     write_to_json(speech, "The lab is free", True)
                 else:
                     write_to_json(speech, "The lab is not free", True)
             else:
-                text_to_speech("I don't know how to answer")
-                write_to_json(speech, "unhandled input")
+                lab_num = ''
+                for num in speech:
+                    if num.isdigit():
+                        lab_num += num
+                if lab_num != '':
+                    temp = lab_free(lab_num)
+                    write_to_json(temp[0], temp[1])
+                else:
+                    text_to_speech("I don't know how to answer, try again")
+                    write_to_json(speech, "unhandled input")
 
 
 if __name__ == '__main__':
@@ -266,5 +282,3 @@ if __name__ == '__main__':
         main()
     except KeyboardInterrupt:
         GPIO.cleanup()
-
-# TODO: Get lab locations
