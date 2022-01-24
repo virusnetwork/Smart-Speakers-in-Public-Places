@@ -9,6 +9,9 @@ import json
 import RPi.GPIO as GPIO
 import time
 import logging
+import tempfile
+import time
+from aiy.voice.audio import AudioFormat, play_wav, record_file
 
 LOCATION = 'Computational Foundry 104 PC'
 COLUMN_LIST: list
@@ -77,62 +80,18 @@ def write_to_json(transcript_from_speech: str, output: str, success: bool = Fals
         json_file.close()
 
 
-def listen():
-    # create recognizer and mic instances
-    recognizer = sr.Recognizer()
-    microphone = sr.Microphone(device_index=1)
+def speech_to_text():
+    with tempfile.NamedTemporaryFile() as f:
+        record_file(AudioFormat.CD, filename=f.name, filetype='wav',
+                    wait=lambda: time.sleep(4))
+        r = sr.Recognizer()
+        file_audio = sr.AudioFile(f.name)
 
-    # * set to max (4000) to accomidation public spaces, dynamic is on so it will change
-    recognizer.energy_threshold = 4000
-    recognizer.dynamic_energy_threshold = True
-
-    return speech_from_mic(recognizer, microphone)
-
-
-def speech_from_mic(audio_recognizer, usb_microphone):
-    """takes speech from microphone turn to text
-    returns a directory with one of 3 values
-    "success" : boolean saying API request was successful or not
-    "error": none if no errors otherwise a string containing the error
-    "transcription": none if speech could not be transcribed else a string
-    """
-
-    # check that recognizer and microphone are appropriate types
-    if not isinstance(audio_recognizer, sr.Recognizer):
-        raise TypeError("`recognizer` must be `Recognizer` instance")
-
-    if not isinstance(usb_microphone, sr.Microphone):
-        raise TypeError("microphone object must be of sr.Microphone")
-
-    # we adjust ambient sensitivity to ambient noise
-    # then we record from microphone and save as var audio
-    with usb_microphone as source:
-        audio_recognizer.adjust_for_ambient_noise(source)
-        audio = audio_recognizer.listen(source)
-
-    # setting up response object
-    response = {
-        "success": True,
-        "error": None,
-        "transcription": None
-    }
-
-    # try recognizing the speech in the recoding (audio)
-    # if a RequestError or unknown value error exception is caught,
-    #   update the response object
-    try:
-        # ? Worth using return all
-        response["transcription"] = audio_recognizer.recognize_google(
-            audio, language="en-GB")
-    except sr.RequestError:
-        # API was unreachable or unresponsive
-        response["success"] = False
-        response["error"] = "API unavailable"
-    except sr.UnknownValueError:
-        # speech was untranslatable
-        response["error"] = "Unable to recognize speech"
-
-    return response
+        with file_audio as source:
+            audio_text = r.record(source)
+       
+        return r.recognize_google(audio_text, language='en_GB')
+    
 
 
 def text_to_speech(text) -> None:
@@ -146,6 +105,7 @@ def text_to_speech(text) -> None:
     engine = pyttsx3.init()
     engine.say(text)
     engine.runAndWait()
+    engine.stop()
 
 
 # lab set up
@@ -256,10 +216,10 @@ def what_labs_are_free():
             free_labs.append(y)
 
     if free_labs:
-        txt = ''
+        speech = ''
         for z in free_labs:
-            txt = txt + ' CF' + z
-        text_to_speech(txt)
+            speech = speech + ' CF' + z
+        text_to_speech(speech)
 
     else:
         text_to_speech('No labs are free at the momement')
@@ -268,30 +228,37 @@ def what_labs_are_free():
 def main():
     while True:
         if(activate_system()):
-            text_to_speech("How can i help?")
-            print("System activated")
             logging.info("System Activated")
-            speech = listen()
-            print("No longer listing")
-            if speech['error']:
-                logging.error("speech error occured")
-                text_to_speech("I don't undertsand")
-                write_to_json('', speech['error'])
-            else:
-                logging.info("speech understood")
-                txt = speech['transcription'].lower()
-                logging.info(txt)
-                if 'what' in txt and 'free' in txt:
-                    what_labs_are_free()
-                elif 'is the lab free' or 'is the lamb free' in txt:
-                    print("got this far")
-                    if lab_free():
-                        write_to_json(txt, "The lab is free", True)
-                    else:
-                        write_to_json(txt, "The lab is not free", True)
+            text_to_speech("How can i help?")
+            logging.info("start listing")
+            try:
+                speech = speech_to_text()
+            except sr.UnknownValueError:
+                logging.error("speech error: uninteligable")
+                text_to_speech("I'm sorry, I don't undertsand")
+                write_to_json('', 'UnknownValueError')
+                continue
+
+            except sr.RequestError:
+                logging.error("speech error: RequestError")
+                text_to_speech("I'm sorry, I'm not connected to the internet")
+                write_to_json('', 'RequestError')
+                continue
+            
+            logging.info("speech understood")
+            speech = speech.lower()
+            logging.info(speech)
+            if 'what' in speech and 'free' in speech:
+                what_labs_are_free()
+            elif 'is the lab free' or 'is the lamb free' in speech:
+                print("got this far")
+                if lab_free():
+                    write_to_json(speech, "The lab is free", True)
                 else:
-                    text_to_speech("I don't know how to answer")
-                    write_to_json(txt, "I don't understand")
+                    write_to_json(speech, "The lab is not free", True)
+            else:
+                text_to_speech("I don't know how to answer")
+                write_to_json(speech, "unhandled input")
 
 
 if __name__ == '__main__':
