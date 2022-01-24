@@ -60,8 +60,6 @@ def activate_system() -> bool:
     # * distance is represents cm
     return distance < 15.0
 
-# write to JSON file
-
 
 def write_to_json(transcript_from_speech: str, output: str, success: bool = False):
     new_event = {
@@ -89,9 +87,8 @@ def speech_to_text():
 
         with file_audio as source:
             audio_text = r.record(source)
-       
+
         return r.recognize_google(audio_text, language='en_GB')
-    
 
 
 def text_to_speech(text) -> None:
@@ -215,14 +212,16 @@ def what_labs_are_free():
         if y not in in_use_labs:
             free_labs.append(y)
 
+    speech = ''
     if free_labs:
-        speech = ''
         for z in free_labs:
             speech = speech + ' CF' + z
-        text_to_speech(speech)
 
     else:
-        text_to_speech('No labs are free at the momement')
+        speech = 'No labs are free at the momement'
+
+    text_to_speech(speech)
+    return speech
 
 
 def main():
@@ -244,12 +243,13 @@ def main():
                 text_to_speech("I'm sorry, I'm not connected to the internet")
                 write_to_json('', 'RequestError')
                 continue
-            
+
             logging.info("speech understood")
             speech = speech.lower()
             logging.info(speech)
             if 'what' in speech and 'free' in speech:
-                what_labs_are_free()
+                txt = what_labs_are_free()
+                write_to_json(speech, txt, True)
             elif 'is the lab free' or 'is the lamb free' in speech:
                 print("got this far")
                 if lab_free():
@@ -268,4 +268,3 @@ if __name__ == '__main__':
         GPIO.cleanup()
 
 # TODO: Get lab locations
-# TODO: Which labs are free
