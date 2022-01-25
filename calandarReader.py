@@ -15,7 +15,7 @@ from aiy.voice.audio import AudioFormat, record_file
 LOCATION = str("Computational Foundry 104 PC")
 COLUMN_LIST: list
 POSSIBLE_INPUT = ['is this lab free', 'is the lab free',
-                  'is the lamb free', 'lab free', 'lab avaible']
+                  'is the lamb free', 'lab free', 'lab avaible', 'this', 'lab']
 LABS = [203, 204, 104, 103]
 
 # GPIO Mode (BOARD / BCM)
@@ -131,8 +131,7 @@ class LabClass:
 
 
 def get_timetable():
-    # TODO: get timetable from website
-    # try website if not use html
+    # ! unuable to get html from website, have to manually update it
     timetable = pd.read_html(open('FSE Intranet - Timetable.html', 'r').read())
     timetable = timetable[0]
     global COLUMN_LIST
@@ -140,13 +139,11 @@ def get_timetable():
     return timetable
 
 
-# TODO: get lab slot for given times, location etc.
-def get_lab_slots() -> list:
+def get_lab_slots(day=int(datetime.now().strftime('%u')), hour=int(datetime.now().strftime('%H'))) -> list:
     timetable = get_timetable()
 
     # Monday = 1, Friday = 5
-    day = int(datetime.now().strftime('%u'))
-    hour = int(datetime.now().strftime('%H'))
+    # TODO: Get date and hour from given
 
     # If it's the weekend or it's before 9am and after 6pm
     if day > 5 or hour < 9 or hour > 18:
@@ -181,15 +178,16 @@ def get_row(num) -> int:
     # 5pm == 8
     return num - 9
 
-# TODO: create function to find WHAT labs are free
-
 
 def lab_free(location=LOCATION):
+    #! Doesn't work
     print(location)
+
     if location != LOCATION:
+        if 
         if int(location) in LABS:
             location = 'Computational Foundry ' + location + ' PC'
-
+        
         else:
             text_to_speech('I do not know that lab')
             return ('I do not know lab' + location, False)
@@ -233,48 +231,90 @@ def what_labs_are_free():
     return speech
 
 
+def has_numbers(string):
+    return any(char.isdigit() for char in string)
+
+
+def get_Speech():
+    try:
+        speech = speech_to_text()
+        return speech.lower()
+    except sr.UnknownValueError:
+        logging.error("speech error: uninteligable")
+        text_to_speech("I'm sorry, I don't undertsand")
+        write_to_json('', 'UnknownValueError')
+        return ''
+
+    except sr.RequestError:
+        logging.error("speech error: RequestError")
+        text_to_speech("I'm sorry, I'm not connected to the internet")
+        write_to_json('', 'RequestError')
+        return ''
+
+    except Exception as e:
+        logging.error("Unknown error: " + e)
+
+
+def get_num(string):
+    emp_str = ""
+    for m in string:
+        if m.isdigit():
+            emp_str = emp_str + m
+
+    num = int(emp_str)
+
+    if len(str(num)) == 3:
+        return num
+    else:
+        if len(str(num)) % 3 == 0:
+            parts = [str(num)[i:i+3] for i in range(0, len(str(num)), 3)]
+            return list(map(int, parts))
+        else:
+            return -1
+
+
+def handle_speech(speech):
+    if has_numbers(speech):
+
+        lab_num = get_num(speech)
+
+        if lab_num == -1:
+            text_to_speech('I do not know that lab')
+            write_to_json('I do not know lab' + speech, False)
+            return
+
+        temp = lab_free(lab_num)
+        write_to_json(temp[0], temp[1])
+
+    elif 'what' in speech:
+        txt = what_labs_are_free()
+        write_to_json(speech, txt, True)
+    elif speech in POSSIBLE_INPUT:
+        if lab_free():
+            write_to_json(speech, "The lab is free", True)
+        else:
+            write_to_json(speech, "The lab is not free", True)
+    else:
+        text_to_speech("I don't know how to answer, try again")
+        write_to_json(speech, "unhandled input")
+
+
 def main():
     while True:
         if(activate_system()):
             logging.info("System Activated")
             text_to_speech("How can i help?")
             logging.info("start listing")
-            try:
-                speech = speech_to_text()
-            except sr.UnknownValueError:
-                logging.error("speech error: uninteligable")
-                text_to_speech("I'm sorry, I don't undertsand")
-                write_to_json('', 'UnknownValueError')
+
+            # get speech
+            speech = get_Speech()
+            if speech == '':
                 continue
 
-            except sr.RequestError:
-                logging.error("speech error: RequestError")
-                text_to_speech("I'm sorry, I'm not connected to the internet")
-                write_to_json('', 'RequestError')
-                continue
+            logging.info("speech understood: " + speech)
 
-            logging.info("speech understood")
-            speech = speech.lower()
-            logging.info(speech)
-            if 'what' in speech and 'free' in speech:
-                txt = what_labs_are_free()
-                write_to_json(speech, txt, True)
-            elif speech in POSSIBLE_INPUT:
-                if lab_free():
-                    write_to_json(speech, "The lab is free", True)
-                else:
-                    write_to_json(speech, "The lab is not free", True)
-            else:
-                lab_num = ''
-                for num in speech:
-                    if num.isdigit():
-                        lab_num += num
-                if lab_num != '':
-                    temp = lab_free(lab_num)
-                    write_to_json(temp[0], temp[1])
-                else:
-                    text_to_speech("I don't know how to answer, try again")
-                    write_to_json(speech, "unhandled input")
+            # Process
+            handle_speech(speech)
 
 
 if __name__ == '__main__':
