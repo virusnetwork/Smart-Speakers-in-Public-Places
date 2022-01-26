@@ -279,6 +279,9 @@ def get_Speech():
 
     except Exception as e:
         logging.error("Unknown error: " + e)
+        text_to_speech("I'm sorry, an error occured")
+        write_to_json('', '"Unknown error: " + e')
+        return ''
 
 
 def get_num(string):
