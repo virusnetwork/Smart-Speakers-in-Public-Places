@@ -139,7 +139,11 @@ def get_timetable():
     return timetable
 
 
-def get_lab_slots(day=int(datetime.now().strftime('%u')), hour=int(datetime.now().strftime('%H'))) -> list:
+def get_lab_slots() -> list:
+
+    day = int(datetime.now().strftime('%u'))
+    hour = int(datetime.now().strftime('%H'))
+
     timetable = get_timetable()
 
     # Monday = 1, Friday = 5
@@ -191,14 +195,16 @@ def lab_free(location=LOCATION):
         else:
             text_to_speech('I do not know that lab')
             return ('I do not know lab' + location, False)
-    elif location != LOCATION:
+    elif location == LOCATION:
+        num = 104
+    else:
         raise ValueError('Mishandled input in lab_free function')
 
     if(list_of_labs):
         for x in list_of_labs:
             if location in x.location:
-                text_to_speech(num + " is not free")
-                return (num + " is not free", True)
+                text_to_speech(str(num) + " is not free")
+                return (str(num) + " is not free", True)
 
     text_to_speech(str(num) + " is free")
     return (str(num) + " is free", True)
