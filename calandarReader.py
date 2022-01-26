@@ -180,39 +180,10 @@ def get_row(num) -> int:
 
 
 def lab_free(location=LOCATION):
-    #! Doesn't work
-    #TODO: Rewrite
-
-    # is location, a list,
-    # is location = a string e.g., LOCATION
-    # is it a 3 digit number
-    # else throw error
 
     list_of_labs = get_lab_slots()
 
-    if type(location) is list:
-        labs = []
-        for x in location:
-            temp = 'Computational Foundry ' + str(x) + ' PC'
-            labs.append(temp)
-
-        for z in labs:
-            for x in list_of_labs:
-                if z in x.location:
-                    #! Doesn't remove
-                    labs.remove(z)
-
-        if labs == []:
-            text_to_speech('those labs are not free')
-            return ('those labs are not free', True)
-        else:
-            temp = ' '.join(labs)
-            text_to_speech(temp + ' are free')
-            return (temp + ' are free', True)
-
-    elif location == LOCATION:
-        pass
-    elif type(location) is int:
+    if type(location) is int:
         if int(location) in LABS:
             num = location
             location = 'Computational Foundry ' + str(location) + ' PC'
@@ -220,7 +191,7 @@ def lab_free(location=LOCATION):
         else:
             text_to_speech('I do not know that lab')
             return ('I do not know lab' + location, False)
-    else:
+    elif location != LOCATION:
         raise ValueError('Mishandled input in lab_free function')
 
     if(list_of_labs):
@@ -228,6 +199,9 @@ def lab_free(location=LOCATION):
             if location in x.location:
                 text_to_speech(num + " is not free")
                 return (num + " is not free", True)
+
+    text_to_speech(str(num) + " is free")
+    return (str(num) + " is free", True)
 
 
 def what_labs_are_free():
@@ -245,10 +219,10 @@ def what_labs_are_free():
         if y not in in_use_labs:
             free_labs.append(y)
 
-    speech = ''
+    speech = ""
     if free_labs:
         for z in free_labs:
-            speech = speech + ' CF' + z
+            speech += ' CF' + str(z)
 
     else:
         speech = 'No labs are free at the momement'
