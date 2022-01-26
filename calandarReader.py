@@ -181,27 +181,53 @@ def get_row(num) -> int:
 
 def lab_free(location=LOCATION):
     #! Doesn't work
-    print(location)
+    #TODO: Rewrite
 
-    if location != LOCATION:
-        if 
+    # is location, a list,
+    # is location = a string e.g., LOCATION
+    # is it a 3 digit number
+    # else throw error
+
+    list_of_labs = get_lab_slots()
+
+    if type(location) is list:
+        labs = []
+        for x in location:
+            temp = 'Computational Foundry ' + str(x) + ' PC'
+            labs.append(temp)
+
+        for z in labs:
+            for x in list_of_labs:
+                if z in x.location:
+                    #! Doesn't remove
+                    labs.remove(z)
+
+        if labs == []:
+            text_to_speech('those labs are not free')
+            return ('those labs are not free', True)
+        else:
+            temp = ' '.join(labs)
+            text_to_speech(temp + ' are free')
+            return (temp + ' are free', True)
+
+    elif location == LOCATION:
+        pass
+    elif type(location) is int:
         if int(location) in LABS:
-            location = 'Computational Foundry ' + location + ' PC'
-        
+            num = location
+            location = 'Computational Foundry ' + str(location) + ' PC'
+
         else:
             text_to_speech('I do not know that lab')
             return ('I do not know lab' + location, False)
+    else:
+        raise ValueError('Mishandled input in lab_free function')
 
-    list_of_labs = get_lab_slots()
     if(list_of_labs):
         for x in list_of_labs:
             if location in x.location:
-                text_to_speech(location + " is not free")
-                return (location + " is not free", True)
-
-    # if list of labs is empty or given lab is not in lab
-    text_to_speech(location + " is free")
-    return (location + " is free", True)
+                text_to_speech(num + " is not free")
+                return (num + " is not free", True)
 
 
 def what_labs_are_free():
@@ -231,7 +257,7 @@ def what_labs_are_free():
     return speech
 
 
-def has_numbers(string):
+def has_numbers(string) -> bool:
     return any(char.isdigit() for char in string)
 
 
@@ -264,13 +290,16 @@ def get_num(string):
     num = int(emp_str)
 
     if len(str(num)) == 3:
-        return num
+        if num in LABS:
+            return num
     else:
         if len(str(num)) % 3 == 0:
             parts = [str(num)[i:i+3] for i in range(0, len(str(num)), 3)]
-            return list(map(int, parts))
-        else:
-            return -1
+            temp = list(map(int, parts))[0]
+            if temp in LABS:
+                return temp
+
+    return -1
 
 
 def handle_speech(speech):
