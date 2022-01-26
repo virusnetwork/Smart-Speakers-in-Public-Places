@@ -147,12 +147,10 @@ def get_lab_slots() -> list:
     timetable = get_timetable()
 
     # Monday = 1, Friday = 5
-    # TODO: Get date and hour from given
 
     # If it's the weekend or it's before 9am and after 6pm
-    if day > 5 or hour < 9 or hour > 18:
-        # TODO: tell people to go home when its closed
-        return []
+    if day > 5 or hour < 9 or hour > 17:
+        return ['closed']
 
     comma_line = str(timetable[get_column_name(day)][get_row(hour)])
 
@@ -186,6 +184,9 @@ def get_row(num) -> int:
 def lab_free(location=LOCATION):
 
     list_of_labs = get_lab_slots()
+    if list_of_labs == ['closed']:
+        text_to_speech("The lab is closed")
+        return ("The lab is closed", True)
 
     if type(location) is int:
         if int(location) in LABS:
@@ -213,6 +214,9 @@ def lab_free(location=LOCATION):
 def what_labs_are_free():
     # get labs
     list_of_labs = get_lab_slots()
+    if list_of_labs == ['closed']:
+        text_to_speech("The lab is closed")
+        return ("The lab is closed", True)
 
     # get used location
     in_use_labs = []
