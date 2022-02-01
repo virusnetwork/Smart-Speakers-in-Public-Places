@@ -30,7 +30,7 @@ GPIO_ECHO = 8
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
 
-logging.basicConfig(level=logging.DEBUG,
+logging.basicConfig(level=logging.DEBUG, 
                     format='%(asctime)s %(levelname)s %(message)s',
                     filename='myapp.log',
                     filemode='w')
@@ -97,8 +97,7 @@ def text_to_speech(text) -> None:
     :param text: string of what will be said
     :return: nothing
     """
-    # TODO: slow talk speed
-    # BUG: Works once then won't work again
+    
     engine = pyttsx3.init()
     engine.say(text)
     engine.runAndWait()
@@ -110,8 +109,6 @@ class LabClass:
     name: str
     duration: str
     location = []
-
-    # TODO: save when lab starts or ends
 
     def __init__(self, name, duration, location) -> None:
         self.name = name
