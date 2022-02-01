@@ -30,7 +30,7 @@ GPIO_ECHO = 8
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
 
-logging.basicConfig(level=logging.DEBUG, 
+logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(levelname)s %(message)s',
                     filename='myapp.log',
                     filemode='w')
@@ -97,7 +97,7 @@ def text_to_speech(text) -> None:
     :param text: string of what will be said
     :return: nothing
     """
-    
+
     engine = pyttsx3.init()
     engine.say(text)
     engine.runAndWait()
@@ -218,12 +218,16 @@ def what_labs_are_free():
     # get used location
     in_use_labs = []
     for x in list_of_labs:
-        in_use_labs.append(x.location)
+        for a in x.location:
+            in_use_labs.append(a)
+
+    # remove duplicate labs
+    in_use_labs = list(set(in_use_labs))
 
     # return elements not in used location
     free_labs = []
     for y in LABS:
-        if y not in in_use_labs:
+        if 'Computational Foundry ' + str(y) + ' PC' not in in_use_labs:
             free_labs.append(y)
 
     speech = ""
