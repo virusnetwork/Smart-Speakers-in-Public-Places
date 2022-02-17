@@ -12,6 +12,8 @@ import tempfile
 import time
 from aiy.voice.audio import AudioFormat, record_file
 
+#TODO: better name for file
+
 LOCATION = str("Computational Foundry 104 PC")
 COLUMN_LIST: list
 POSSIBLE_INPUT = ['is this lab free', 'is the lab free',
@@ -291,6 +293,7 @@ def get_num(string):
 
 
 def handle_speech(speech):
+    #TODO: Improve handling of speech, legal statements in data.json unhandled
     if has_numbers(speech):
 
         lab_num = get_num(speech)
