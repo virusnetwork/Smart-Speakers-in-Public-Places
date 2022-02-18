@@ -304,7 +304,7 @@ def handle_speech(speech):
             return
 
         temp = lab_free(lab_num)
-        write_to_json(temp[0], temp[1])
+        write_to_json(speech,temp[0], temp[1])
 
     elif 'what' in speech:
         txt = what_labs_are_free()
@@ -316,7 +316,7 @@ def handle_speech(speech):
             write_to_json(speech, "The lab is not free", True)
     else:
         text_to_speech("I don't know how to answer, try again")
-        write_to_json(speech, "unhandled input")
+        write_to_json(speech, False ,"unhandled input")
 
 
 def main():

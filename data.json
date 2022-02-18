@@ -1755,5 +1755,166 @@
         "speech": "",
         "output": "UnknownValueError",
         "success": false
+    },
+    {
+        "date": "02/17/22",
+        "time": "13:40:54",
+        "speech": "is the lab free",
+        "output": "The lab is free",
+        "success": true
+    },
+    {
+        "date": "02/17/22",
+        "time": "13:48:02",
+        "speech": "",
+        "output": "UnknownValueError",
+        "success": false
+    },
+    {
+        "date": "02/17/22",
+        "time": "15:04:35",
+        "speech": "is the lab free",
+        "output": "The lab is free",
+        "success": true
+    },
+    {
+        "date": "02/17/22",
+        "time": "15:05:01",
+        "speech": "are there any free pc labs",
+        "output": "unhandled input",
+        "success": false
+    },
+    {
+        "date": "02/17/22",
+        "time": "15:05:18",
+        "speech": "are there any available pc rooms",
+        "output": "unhandled input",
+        "success": false
+    },
+    {
+        "date": "02/17/22",
+        "time": "15:05:41",
+        "speech": "are there any available labs",
+        "output": "unhandled input",
+        "success": false
+    },
+    {
+        "date": "02/17/22",
+        "time": "15:06:00",
+        "speech": "what labs are free",
+        "output": " CF203 CF204 CF103",
+        "success": true
+    },
+    {
+        "date": "02/17/22",
+        "time": "15:08:38",
+        "speech": "live move the so much the soldering came out",
+        "output": "unhandled input",
+        "success": false
+    },
+    {
+        "date": "02/18/22",
+        "time": "13:46:25",
+        "speech": "I do not know lablab3",
+        "output": false,
+        "success": false
+    },
+    {
+        "date": "02/18/22",
+        "time": "13:46:33",
+        "speech": "is the lab free",
+        "output": "The lab is free",
+        "success": true
+    },
+    {
+        "date": "02/18/22",
+        "time": "14:06:57",
+        "speech": "I do not know labis lab 10 for free",
+        "output": false,
+        "success": false
+    },
+    {
+        "date": "02/18/22",
+        "time": "14:07:09",
+        "speech": "I do not know labis lab 1043",
+        "output": false,
+        "success": false
+    },
+    {
+        "date": "02/18/22",
+        "time": "14:07:23",
+        "speech": "I do not know labblob 1043",
+        "output": false,
+        "success": false
+    },
+    {
+        "date": "02/18/22",
+        "time": "14:07:32",
+        "speech": "I do not know labis love 1043",
+        "output": false,
+        "success": false
+    },
+    {
+        "date": "02/18/22",
+        "time": "14:07:43",
+        "speech": "104 is not free",
+        "output": true,
+        "success": false
+    },
+    {
+        "date": "02/18/22",
+        "time": "14:08:14",
+        "speech": "available labs",
+        "output": "unhandled input",
+        "success": false
+    },
+    {
+        "date": "02/18/22",
+        "time": "14:08:28",
+        "speech": "",
+        "output": "UnknownValueError",
+        "success": false
+    },
+    {
+        "date": "02/18/22",
+        "time": "14:08:40",
+        "speech": "free labs",
+        "output": "unhandled input",
+        "success": false
+    },
+    {
+        "date": "02/18/22",
+        "time": "14:09:08",
+        "speech": "labs are free",
+        "output": "unhandled input",
+        "success": false
+    },
+    {
+        "date": "02/18/22",
+        "time": "14:09:20",
+        "speech": "what slabs are free",
+        "output": " CF203 CF204 CF103",
+        "success": true
+    },
+    {
+        "date": "02/18/22",
+        "time": "14:11:47",
+        "speech": "yeah",
+        "output": "unhandled input",
+        "success": false
+    },
+    {
+        "date": "02/18/22",
+        "time": "14:13:05",
+        "speech": "what labs are free",
+        "output": " CF203 CF204 CF103",
+        "success": true
+    },
+    {
+        "date": "02/18/22",
+        "time": "14:13:24",
+        "speech": "yes sometimes does that way like it",
+        "output": "unhandled input",
+        "success": false
     }
 ]
