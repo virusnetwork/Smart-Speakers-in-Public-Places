@@ -605,8 +605,8 @@
         "date": "03/02/22",
         "time": "15:49:46",
         "speech": "suck my ass",
-        "output": false,
-        "success": "unhandled input"
+        "output": "unhandled input",
+        "success": false
     },
     {
         "date": "03/02/22",
@@ -626,22 +626,22 @@
         "date": "03/02/22",
         "time": "16:04:08",
         "speech": "is there a free lab right now",
-        "output": false,
-        "success": "unhandled input"
+        "output": "unhandled input",
+        "success": false
     },
     {
         "date": "03/02/22",
         "time": "16:04:20",
         "speech": "is there a available lab class",
-        "output": false,
-        "success": "unhandled input"
+        "output": "unhandled input",
+        "success": false
     },
     {
         "date": "03/02/22",
         "time": "16:04:52",
         "speech": "can i access to the labs right now",
-        "output": false,
-        "success": "unhandled input"
+        "output": "unhandled input",
+        "success": false
     },
     {
         "date": "03/02/22",
@@ -661,36 +661,36 @@
         "date": "03/02/22",
         "time": "16:24:16",
         "speech": "it's so so",
-        "output": false,
-        "success": "unhandled input"
+        "output": "unhandled input",
+        "success": false
     },
     {
         "date": "03/02/22",
         "time": "16:26:15",
         "speech": "is the lad free right now",
-        "output": false,
-        "success": "unhandled input"
+        "output": "unhandled input",
+        "success": false 
     },
     {
         "date": "03/02/22",
         "time": "16:26:25",
         "speech": "is the lab free right now",
-        "output": false,
-        "success": "unhandled input"
+        "output": "unhandled input",
+        "success": false
     },
     {
         "date": "03/02/22",
         "time": "16:26:42",
         "speech": "love is free to use right now",
-        "output": false,
-        "success": "unhandled input"
+        "output": "unhandled input",
+        "success": false
     },
     {
         "date": "03/02/22",
         "time": "16:26:59",
         "speech": "are there any available computer labs right now",
-        "output": false,
-        "success": "unhandled input"
+        "output": "unhandled input",
+        "success": false
     },
     {
         "date": "03/02/22",
