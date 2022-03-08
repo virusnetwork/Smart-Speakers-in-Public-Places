@@ -248,7 +248,7 @@
         "date": "02/16/22",
         "time": "13:44:11",
         "speech": "I do not know lablab3",
-        "output": false,
+        "output": "unhandled input",
         "success": false
     },
     {
@@ -283,8 +283,8 @@
         "date": "02/16/22",
         "time": "14:10:38",
         "speech": "104 is free",
-        "output": true,
-        "success": false
+        "output": "104 is free",
+        "success": true
     },
     {
         "date": "02/16/22",
@@ -303,22 +303,22 @@
     {
         "date": "02/16/22",
         "time": "14:30:05",
-        "speech": "I do not know labis 1043",
-        "output": false,
+        "speech": "is 1043",
+        "output": "I do not know that lab",
         "success": false
     },
     {
         "date": "02/16/22",
         "time": "14:30:16",
-        "speech": "I do not know labis 1043",
-        "output": false,
+        "speech": "is 1043",
+        "output": "I do not know lab",
         "success": false
     },
     {
         "date": "02/16/22",
         "time": "14:30:28",
-        "speech": "I do not know lab1043",
-        "output": false,
+        "speech": "1043",
+        "output": "I do not know lab",
         "success": false
     },
     {
@@ -331,16 +331,16 @@
     {
         "date": "02/16/22",
         "time": "14:30:55",
-        "speech": "I do not know labis 1043",
-        "output": false,
+        "speech": "is 1043",
+        "output": "I do not know lab",
         "success": false
     },
     {
         "date": "02/16/22",
         "time": "14:31:07",
         "speech": "104 is free",
-        "output": true,
-        "success": false
+        "output": "104 is free",
+        "success": true
     },
     {
         "date": "02/16/22",
@@ -471,8 +471,8 @@
     {
         "date": "02/18/22",
         "time": "13:46:25",
-        "speech": "I do not know lablab3",
-        "output": false,
+        "speech": "lab3",
+        "output": "I do not know lab",
         "success": false
     },
     {
@@ -485,37 +485,37 @@
     {
         "date": "02/18/22",
         "time": "14:06:57",
-        "speech": "I do not know labis lab 10 for free",
-        "output": false,
+        "speech": "is lab 10 for free",
+        "output": "I do not know lab",
         "success": false
     },
     {
         "date": "02/18/22",
         "time": "14:07:09",
-        "speech": "I do not know labis lab 1043",
-        "output": false,
+        "speech": "is lab 1043",
+        "output": "I do not know lab",
         "success": false
     },
     {
         "date": "02/18/22",
         "time": "14:07:23",
-        "speech": "I do not know labblob 1043",
-        "output": false,
+        "speech": "blob 1043",
+        "output": "I do not know lab",
         "success": false
     },
     {
         "date": "02/18/22",
         "time": "14:07:32",
-        "speech": "I do not know labis love 1043",
-        "output": false,
+        "speech": "is love 1043",
+        "output": "I do not know lab",
         "success": false
     },
     {
         "date": "02/18/22",
         "time": "14:07:43",
         "speech": "104 is not free",
-        "output": true,
-        "success": false
+        "output": "104 is not free",
+        "success": true
     },
     {
         "date": "02/18/22",
