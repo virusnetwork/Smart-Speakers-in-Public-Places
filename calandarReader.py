@@ -12,7 +12,7 @@ import tempfile
 import time
 from aiy.voice.audio import AudioFormat, record_file
 
-#TODO: better name for file
+# TODO: better name for file
 
 LOCATION = str("Computational Foundry 104 PC")
 COLUMN_LIST: list
@@ -293,18 +293,18 @@ def get_num(string):
 
 
 def handle_speech(speech):
-    #TODO: Improve handling of speech, legal statements in data.json unhandled
+    # TODO: Improve handling of speech, legal statements in data.json unhandled
     if has_numbers(speech):
 
         lab_num = get_num(speech)
 
         if lab_num == -1:
             text_to_speech('I do not know that lab')
-            write_to_json('I do not know lab' , speech, False)
+            write_to_json(speech, 'I do not know that lab', False)
             return
 
         temp = lab_free(lab_num)
-        write_to_json(speech,temp[0], temp[1])
+        write_to_json(speech, temp[0], temp[1])
 
     elif 'what' in speech:
         txt = what_labs_are_free()
@@ -316,7 +316,7 @@ def handle_speech(speech):
             write_to_json(speech, "The lab is not free", True)
     else:
         text_to_speech("I don't know how to answer, try again")
-        write_to_json(speech, False ,"unhandled input")
+        write_to_json(speech, False, "unhandled input")
 
 
 def main():
