@@ -300,7 +300,7 @@ def handle_speech(speech):
 
         if lab_num == -1:
             text_to_speech('I do not know that lab')
-            write_to_json('I do not know lab' + speech, False)
+            write_to_json('I do not know lab' , speech, False)
             return
 
         temp = lab_free(lab_num)
