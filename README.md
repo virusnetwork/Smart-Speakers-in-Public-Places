@@ -1,7 +1,7 @@
 # Smart-Speakers-in-Public-Places
 Master's Project for Miles Singleton
 
-Smart speaker system to advise which labs are free 
+Research project for master's thesis. The purpose was to study how students would interact with voice interfaces in public places. Built a smart speaker system to advise which labs are free. Conducted a usability study, and planned out a field study but due to unforeseen events, an online survey would be used to gather qualitative and quantitive data. Research would show students had social anxiety about using such a system in public however usability study would show once a student had used such a system that anxiety had very much dissipated.
 
 [calandarReader.py](https://github.com/virusnetwork/Smart-Speakers-in-Public-Places/blob/main/calandarReader.py) Main program, handles speech, getting labs and response. Needs a better name.<br/>
 [data.json](https://github.com/virusnetwork/Smart-Speakers-in-Public-Places/blob/main/data.json) contains all interactions of system and results<br/>
